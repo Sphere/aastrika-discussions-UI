@@ -19,7 +19,7 @@
                 <img class="h-6" src="./assets/discussion-ui/images/more-vert.png">
             </div> -->
 
-      <div *ngIf="discussionData?.user.uid == userDetails?.uid">
+      <div class="relative" *ngIf="discussionData?.user.uid == userDetails?.uid">
         <div class="kabab-menu" id="group-actions" (click)="onMenuClick()"></div>
         <div class="kabab-menu-dropdown-content" [hidden]="dropdownContent">
           <div>
