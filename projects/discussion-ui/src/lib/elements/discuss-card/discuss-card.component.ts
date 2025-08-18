@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Renderer2, Output, EventEmitter} from '@angular/core';
-import { DiscussionDeleteComponent } from '../../components/discussion-delete/discussion-delete.component';
 import { DiscussionService } from '../../services/discussion.service';
 // import { EventEmitter } from 'events';
 import { TelemetryUtilsService } from '../../telemetry-utils.service';

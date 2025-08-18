@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DiscussionService } from './../../services/discussion.service';
-import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NSDiscussData } from './../../models/discuss.model';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { DiscussUtilsService } from '../../services/discuss-utils.service';

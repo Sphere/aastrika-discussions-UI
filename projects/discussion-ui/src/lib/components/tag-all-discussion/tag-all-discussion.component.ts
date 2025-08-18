@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { DiscussionService } from '../../services/discussion.service';
 /* tslint:disable */
 import _ from 'lodash'
-import { Subscriber, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ConfigService } from '../../services/config.service';
 import * as CONSTANTS from './../../common/constants.json';
 import { DiscussUtilsService } from '../../services/discuss-utils.service';

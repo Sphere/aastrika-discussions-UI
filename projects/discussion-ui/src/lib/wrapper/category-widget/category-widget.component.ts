@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 import { DiscussionService } from '../../services/discussion.service';
 import * as _ from 'lodash'

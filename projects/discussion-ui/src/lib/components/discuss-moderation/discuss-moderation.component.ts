@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 /* tslint:disable */
 import * as _ from 'lodash'
 /* tslint:enable */
