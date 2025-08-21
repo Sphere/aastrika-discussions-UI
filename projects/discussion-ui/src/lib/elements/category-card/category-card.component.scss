@@ -40,23 +40,18 @@
         .category-card-header-label {
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            /* autoprefixer: off */
             -webkit-box-orient: vertical;
-            /* autoprefixer: on */
             overflow: hidden;
             text-overflow: ellipsis;
             color: rgba(0, 0, 0, .87);
             word-break: break-all;
             font-size: 1rem;
-            // margin:0 1rem;
             font-weight: 700 !important;
         }
     }
     .category-card-header-text {
         color: #5f5f5f !important;
-        /* autoprefixer: off */
         -webkit-box-orient: vertical;
-        /* autoprefixer: on */
         display: -webkit-box;
         -webkit-line-clamp: 2;
         overflow: hidden;

@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { of as observableOf, throwError as observableThrowError, Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { urlConfig } from './../config/url.config';
-import { NSDiscussData } from '../models/discuss.model';
 
 /* tslint:disable */
 import * as _ from 'lodash'

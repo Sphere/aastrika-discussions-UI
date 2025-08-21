@@ -1,14 +1,12 @@
 import { CONTEXT_PROPS } from './../../services/discussion.service';
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DiscussionService } from '../../services/discussion.service';
 import { ConfigService } from '../../services/config.service';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
-import * as CONSTANTS from './../../common/constants.json';
 /* tslint:disable */
 import * as _ from 'lodash'
 import { NSDiscussData } from '../../models/discuss.model';
-import { DiscussStartComponent } from '../discuss-start/discuss-start.component';
 import { Subject, Subscription } from 'rxjs';
 import { NavigationServiceService } from '../../navigation-service.service';
 import { DiscussionUIService } from '../../services/discussion-ui.service';

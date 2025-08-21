@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { EventsService } from '../../events.service';
 import { NavigationServiceService } from '../../navigation-service.service';
 import { ConfigService } from '../../services/config.service';

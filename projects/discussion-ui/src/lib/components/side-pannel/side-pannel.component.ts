@@ -8,7 +8,6 @@ import * as CONSTANTS from './../../common/constants.json';
 
 /* tslint:disable */
 import * as _ from 'lodash'
-import { first } from 'rxjs/operators';
 import { ConfigService } from '../../services/config.service';
 import { IdiscussionConfig, IMenuOptions } from '../../models/discussion-config.model';
 /* tslint:enable */
