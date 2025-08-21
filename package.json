@@ -1,6 +1,6 @@
 {
   "name": "sunbird-ed-discussions-ui-v8",
-  "version": "2.1.19",
+  "version": "2.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -51,7 +51,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "lodash-es": "^4.17.20",
     "ng-packagr": "^9.1.5",
-    "ngx-chips": "2.0.2",
+    "ngx-chips": "2.1.0",
     "protractor": "~5.4.0",
     "ts-jest": "^26.5.4",
     "ts-node": "~7.0.0",
