@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/discussion-ui/tsconfig.lib.json",
             "project": "projects/discussion-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/discussion-ui/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -22,18 +27,6 @@
             "main": "projects/discussion-ui/src/test.ts",
             "tsConfig": "projects/discussion-ui/tsconfig.spec.json",
             "karmaConfig": "projects/discussion-ui/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/discussion-ui/tsconfig.lib.json",
-              "projects/discussion-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
