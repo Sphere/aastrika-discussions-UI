@@ -17,7 +17,7 @@
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/discussion-ui/tsconfig.lib.prod.json"
+              "tsConfig": "projects/discussion-ui/tsconfig.lib.json"
             }
           }
         },
