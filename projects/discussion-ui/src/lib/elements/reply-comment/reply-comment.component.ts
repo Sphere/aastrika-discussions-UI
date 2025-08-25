@@ -1,5 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DiscussionUIService } from '../../services/discussion-ui.service';
 import { DiscussionService } from '../../services/discussion.service';
 
@@ -11,12 +11,12 @@ import { DiscussionService } from '../../services/discussion.service';
 export class ReplyCommentComponent implements OnInit {
 
   replyData:any
-  replyForm!: FormGroup;
+  replyForm!: UntypedFormGroup;
   // displayState
   
   
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private discussionUIService: DiscussionUIService,
     private discussionService: DiscussionService,
   ) { }

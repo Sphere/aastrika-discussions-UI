@@ -3,7 +3,7 @@ import { DiscussionService } from './../../services/discussion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, Input, Renderer2, Output, EventEmitter } from '@angular/core';
 import { NSDiscussData } from './../../models/discuss.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import * as CONSTANTS from '../../common/constants.json';
 /* tslint:disable */
 import * as _ from 'lodash'
@@ -38,9 +38,9 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   data: any;
   paginationData!: any;
   pager = {};
-  postAnswerForm!: FormGroup;
-  UpdatePostAnswerForm: FormGroup;
-  replyForm: FormGroup;
+  postAnswerForm!: UntypedFormGroup;
+  UpdatePostAnswerForm: UntypedFormGroup;
+  replyForm: UntypedFormGroup;
   fetchSingleCategoryLoader = false;
   paramsSubscription: Subscription;
   editMode = false;
@@ -58,7 +58,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private discussionService: DiscussionService,
     private configService: ConfigService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     private telemetryUtils: TelemetryUtilsService,
     private renderer: Renderer2,
