@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -13,12 +13,12 @@ export class PostReplyComponent implements OnInit {
 
   @Output() actionEvent = new EventEmitter();
 
-  replyForm!: FormGroup;
+  replyForm!: UntypedFormGroup;
 
   isButtonEnabled = false;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) { }
 
   ngOnInit() {

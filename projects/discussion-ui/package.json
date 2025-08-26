@@ -1,6 +1,6 @@
 {
   "name": "@aastrika_npmjs/discussions-ui-v8",
-  "version": "2.2.1",
+  "version": "2.2.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sunbird-Ed/discussions-UI.git"
@@ -15,12 +15,12 @@
   },
   "homepage": "https://github.com/Sunbird-Ed/discussions-UI.git#readme",
   "peerDependencies": {
-    "@angular/common": "^10.2.5",
-    "@angular/core": "^10.2.5",
+    "@angular/common": "^15.2.10",
+    "@angular/core": "^15.2.10",
     "@project-sunbird/client-services": "^3.9.5",
     "lodash-es": "^4.17.20",
-    "ngx-chips": "2.1.0",
-    "ngx-infinite-scroll": "^8.0.2"
+    "ngx-chips": "2.2.2",
+    "ngx-infinite-scroll": "^15.0.0"
   },
   "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.",
   "scripts": {

@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { DiscussionService } from './../../services/discussion.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NSDiscussData } from './../../models/discuss.model';
@@ -20,7 +20,7 @@ export class DiscussStartComponent implements OnInit {
   @Input() mode: string;
   @Output() close = new EventEmitter();
 
-  startForm!: FormGroup;
+  startForm!: UntypedFormGroup;
   editable = true;
   allCategories!: NSDiscussData.ICategorie[];
   allTags!: NSDiscussData.ITag[];
@@ -36,7 +36,7 @@ export class DiscussStartComponent implements OnInit {
 
   constructor(
     private discussService: DiscussionService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private telemetryUtils: TelemetryUtilsService,
     private configService: ConfigService,
     private discussUtils: DiscussUtilsService
@@ -80,7 +80,7 @@ export class DiscussStartComponent implements OnInit {
       this.validateForm();
     }
   }
-  public noWhitespaceValidator(control: FormControl) {
+  public noWhitespaceValidator(control: UntypedFormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;
     const isValid = !isWhitespace;
     return isValid ? null : { 'whitespace': true };
