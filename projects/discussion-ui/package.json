@@ -17,7 +17,7 @@
   "peerDependencies": {
     "@angular/common": "^16.2.12",
     "@angular/core": "^16.2.12",
-    "@project-sunbird/client-services": "^3.9.5",
+    "@project-sunbird/client-services": "7.0.4",
     "lodash-es": "^4.17.20",
     "ngx-chips": "3.0.0",
     "ngx-infinite-scroll": "^16.0.0"
