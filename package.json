@@ -37,7 +37,7 @@
     "@angular/cli": "^16.2.16",
     "@angular/compiler-cli": "^16.2.12",
     "@angular/language-service": "^16.2.12",
-    "@project-sunbird/client-services": "^3.9.5",
+    "@project-sunbird/client-services": "7.0.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/jest": "^26.0.22",
