@@ -1,5 +1,6 @@
 ## Step 1: Install the package
 ```
+   node - 18.20.8
    npm install
 
 ```
@@ -137,6 +138,11 @@ if (!CsModule.instance.isInitialised) { // Singleton initialised or not
 | [DiscussTagsComponent] | displays all the tags available |sb-discuss-tags|
 | [MyDiscussionComponent] | displays the user data |sb-my-discussion|
 | [DiscussStartComponent] | used to start the discussion |sb-discuss-start|
+
+## versions
+|Branch | versions| 
+|--|--|
+|angular-15|3.0.0|
 
 
 
