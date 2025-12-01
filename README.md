@@ -143,7 +143,7 @@ if (!CsModule.instance.isInitialised) { // Singleton initialised or not
 |Branch | versions| 
 |--|--|
 |angular-15|3.0.0|
-|angular-16|4.0.0|
+|angular-16|4.0.0|4.0.1|
 
 
 
