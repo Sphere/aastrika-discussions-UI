@@ -28,6 +28,7 @@ export class DiscussAllComponent implements OnInit {
   // @Input() slug: string;
 
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
+  @Output() dismissModal: EventEmitter<any> = new EventEmitter();
 
   discussionList: any[];
   privilegesData: any;
@@ -351,6 +352,7 @@ export class DiscussAllComponent implements OnInit {
       this.showModerationModal = true
     }
     this.showStartDiscussionModal = false;
+    this.dismissModal.emit('close');
   }
 
   closeModerationModal(event) {
