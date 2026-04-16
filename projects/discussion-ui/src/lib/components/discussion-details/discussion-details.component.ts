@@ -20,9 +20,10 @@ const MSGS = {
 };
 
 @Component({
-  selector: 'lib-discussion-details',
-  templateUrl: './discussion-details.component.html',
-  styleUrls: ['./discussion-details.component.scss']
+    selector: 'lib-discussion-details',
+    templateUrl: './discussion-details.component.html',
+    styleUrls: ['./discussion-details.component.scss'],
+    standalone: false
 })
 export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   @Input() topicId: any;

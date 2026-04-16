@@ -10,9 +10,10 @@ import { ConfigService } from '../../services/config.service';
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-my-discussion',
-  templateUrl: './my-discussion.component.html',
-  styleUrls: ['./my-discussion.component.scss']
+    selector: 'lib-my-discussion',
+    templateUrl: './my-discussion.component.html',
+    styleUrls: ['./my-discussion.component.scss'],
+    standalone: false
 })
 export class MyDiscussionComponent implements OnInit {
 

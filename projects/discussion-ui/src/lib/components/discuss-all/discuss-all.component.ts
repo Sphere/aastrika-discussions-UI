@@ -16,9 +16,10 @@ import { takeUntil } from 'rxjs/operators'
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-discuss-all',
-  templateUrl: './discuss-all.component.html',
-  styleUrls: ['./discuss-all.component.scss']
+    selector: 'lib-discuss-all',
+    templateUrl: './discuss-all.component.html',
+    styleUrls: ['./discuss-all.component.scss'],
+    standalone: false
 })
 export class DiscussAllComponent implements OnInit {
 

@@ -12,9 +12,10 @@ import { NavigationServiceService } from '../../navigation-service.service';
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-discuss-home',
-  templateUrl: './discuss-home.component.html',
-  styleUrls: ['./discuss-home.component.scss']
+    selector: 'lib-discuss-home',
+    templateUrl: './discuss-home.component.html',
+    styleUrls: ['./discuss-home.component.scss'],
+    standalone: false
 })
 export class DiscussHomeComponent implements OnInit {
   

@@ -9,9 +9,10 @@ import { NavigationServiceService } from '../../navigation-service.service'
 
 /* tslint:enable */
 @Component({
-  selector: 'lib-discuss-trending-tags',
-  templateUrl: './trending-tags.component.html',
-  styleUrls: ['./trending-tags.component.scss'],
+    selector: 'lib-discuss-trending-tags',
+    templateUrl: './trending-tags.component.html',
+    styleUrls: ['./trending-tags.component.scss'],
+    standalone: false
 })
 export class TrendingTagsComponent implements OnInit, OnChanges {
   @Input() tags!: NSDiscussData.ITag[];

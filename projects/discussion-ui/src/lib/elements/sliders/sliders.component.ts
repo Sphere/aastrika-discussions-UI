@@ -4,9 +4,10 @@ import { Subscription, interval } from 'rxjs'
 // import { EventService } from '@sunbird-cb/utils'
 
 @Component({
-  selector: 'ws-widget-sliders',
-  templateUrl: './sliders.component.html',
-  styleUrls: ['./sliders.component.scss'],
+    selector: 'ws-widget-sliders',
+    templateUrl: './sliders.component.html',
+    styleUrls: ['./sliders.component.scss'],
+    standalone: false
 })
 export class SlidersComponent implements OnInit {
   @Input() bannerData: any

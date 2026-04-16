@@ -6,7 +6,8 @@ import * as _ from 'lodash'
 @Component({
     selector: 'lib-discuss-moderation',
     templateUrl: './discuss-moderation.component.html',
-    styleUrls: ['./discuss-moderation.component.scss']
+    styleUrls: ['./discuss-moderation.component.scss'],
+    standalone: false
 })
 export class DiscussModerationComponent implements OnInit {
     @Output() close = new EventEmitter();

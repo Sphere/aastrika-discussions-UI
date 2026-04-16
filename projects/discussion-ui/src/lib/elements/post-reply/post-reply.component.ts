@@ -2,9 +2,10 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'lib-post-reply',
-  templateUrl: './post-reply.component.html',
-  styleUrls: ['./post-reply.component.scss']
+    selector: 'lib-post-reply',
+    templateUrl: './post-reply.component.html',
+    styleUrls: ['./post-reply.component.scss'],
+    standalone: false
 })
 export class PostReplyComponent implements OnInit {
   @Input() showCancel = true;

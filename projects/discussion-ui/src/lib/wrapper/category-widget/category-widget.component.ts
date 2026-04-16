@@ -7,9 +7,10 @@ import * as CONSTANTS from '../../common/constants.json';
 import { EventsService } from '../../events.service';
 import { BaseWrapperComponent } from '../base-wrapper/base-wrapper.component';
 @Component({
-  selector: 'sb-category-widget',
-  templateUrl: './category-widget.component.html',
-  styleUrls: ['./category-widget.component.css']
+    selector: 'sb-category-widget',
+    templateUrl: './category-widget.component.html',
+    styleUrls: ['./category-widget.component.css'],
+    standalone: false
 })
 export class CategoryWidgetComponent extends BaseWrapperComponent {
 

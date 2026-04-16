@@ -4,7 +4,8 @@ import { orderBy } from 'lodash-es';
 /* tslint:enable */
 
 @Pipe({
-  name: 'sortBy'
+    name: 'sortBy',
+    standalone: false
 })
 export class SortByPipe implements PipeTransform {
 

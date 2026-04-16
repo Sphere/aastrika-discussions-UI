@@ -4,9 +4,10 @@ import { DiscussionUIService } from '../../services/discussion-ui.service';
 import { DiscussionService } from '../../services/discussion.service';
 
 @Component({
-  selector: 'lib-reply-comment',
-  templateUrl: './reply-comment.component.html',
-  styleUrls: ['./reply-comment.component.scss']
+    selector: 'lib-reply-comment',
+    templateUrl: './reply-comment.component.html',
+    styleUrls: ['./reply-comment.component.scss'],
+    standalone: false
 })
 export class ReplyCommentComponent implements OnInit {
 

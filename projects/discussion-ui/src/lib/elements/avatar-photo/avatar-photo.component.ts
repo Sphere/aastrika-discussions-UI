@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'lib-avatar-photo',
-  templateUrl: './avatar-photo.component.html',
-  styleUrls: ['./avatar-photo.component.css']
+    selector: 'lib-avatar-photo',
+    templateUrl: './avatar-photo.component.html',
+    styleUrls: ['./avatar-photo.component.css'],
+    standalone: false
 })
 export class AvatarPhotoComponent implements OnInit {
 

@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'createInitials'
+    name: 'createInitials',
+    standalone: false
 })
 export class CreateInitialsPipe implements PipeTransform {
 

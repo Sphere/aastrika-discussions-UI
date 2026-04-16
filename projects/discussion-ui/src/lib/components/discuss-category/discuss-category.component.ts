@@ -13,9 +13,10 @@ import { NavigationServiceService } from '../../navigation-service.service';
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-discuss-category',
-  templateUrl: './discuss-category.component.html',
-  styleUrls: ['./discuss-category.component.css']
+    selector: 'lib-discuss-category',
+    templateUrl: './discuss-category.component.html',
+    styleUrls: ['./discuss-category.component.css'],
+    standalone: false
 })
 export class DiscussCategoryComponent implements OnInit, OnDestroy {
 

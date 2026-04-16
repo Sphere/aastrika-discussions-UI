@@ -15,12 +15,12 @@ import { NavigationServiceService } from '../../navigation-service.service';
 import { AbstractConfigService } from '../../services/abstract-config.service';
 /* tslint:enable */
 @Component({
-  selector: 'lib-lib-entry',
-  templateUrl: './lib-entry.component.html',
-  styleUrls: ['./lib-entry.component.scss'],
-  /* tslint:disable */
-  host: { class: 'flex-1 main_discuss_lib',},
-  /* tslint:enable */
+    selector: 'lib-lib-entry',
+    templateUrl: './lib-entry.component.html',
+    styleUrls: ['./lib-entry.component.scss'],
+    /* tslint:disable */
+    host: { class: 'flex-1 main_discuss_lib', },
+    standalone: false
 })
 export class LibEntryComponent implements OnInit {
 

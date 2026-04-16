@@ -10,9 +10,10 @@ import { ConfigService } from '../../services/config.service';
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-discuss-edit',
-  templateUrl: './discuss-edit.component.html',
-  styleUrls: ['./discuss-edit.component.scss']
+    selector: 'lib-discuss-edit',
+    templateUrl: './discuss-edit.component.html',
+    styleUrls: ['./discuss-edit.component.scss'],
+    standalone: false
 })
 export class DiscussEditComponent implements OnInit {
   @Input() categoryId: string;

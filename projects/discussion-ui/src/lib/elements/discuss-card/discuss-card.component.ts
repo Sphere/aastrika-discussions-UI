@@ -12,9 +12,10 @@ import { NSDiscussData } from './../../models/discuss.model';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 @Component({
-  selector: 'lib-discuss-card',
-  templateUrl: './discuss-card.component.html',
-  styleUrls: ['./discuss-card.component.scss']
+    selector: 'lib-discuss-card',
+    templateUrl: './discuss-card.component.html',
+    styleUrls: ['./discuss-card.component.scss'],
+    standalone: false
 })
 export class DiscussCardComponent implements OnInit {
   replyFlag = false;

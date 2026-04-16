@@ -10,9 +10,10 @@ import { ConfigService } from '../../services/config.service';
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-discuss-start',
-  templateUrl: './discuss-start.component.html',
-  styleUrls: ['./discuss-start.component.scss']
+    selector: 'lib-discuss-start',
+    templateUrl: './discuss-start.component.html',
+    styleUrls: ['./discuss-start.component.scss'],
+    standalone: false
 })
 export class DiscussStartComponent implements OnInit {
   @Input() categoryId: string;

@@ -12,9 +12,10 @@ import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { NavigationServiceService } from '../../navigation-service.service';
 
 @Component({
-  selector: 'lib-tag-all-discussion',
-  templateUrl: './tag-all-discussion.component.html',
-  styleUrls: ['./tag-all-discussion.component.scss']
+    selector: 'lib-tag-all-discussion',
+    templateUrl: './tag-all-discussion.component.html',
+    styleUrls: ['./tag-all-discussion.component.scss'],
+    standalone: false
 })
 export class TagAllDiscussionComponent implements OnInit {
   @Input() widgetTagName: any;

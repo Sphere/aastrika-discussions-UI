@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'splitInitials'
+    name: 'splitInitials',
+    standalone: false
 })
 export class SplitInitialsPipe implements PipeTransform {
 

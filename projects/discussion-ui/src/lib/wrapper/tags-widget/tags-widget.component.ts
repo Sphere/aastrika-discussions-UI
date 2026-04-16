@@ -6,9 +6,10 @@ import { DiscussionService } from '../../services/discussion.service';
 import { BaseWrapperComponent } from '../base-wrapper/base-wrapper.component';
 
 @Component({
-  selector: 'sb-tags-widget',
-  templateUrl: './tags-widget.component.html',
-  styleUrls: ['./tags-widget.component.css']
+    selector: 'sb-tags-widget',
+    templateUrl: './tags-widget.component.html',
+    styleUrls: ['./tags-widget.component.css'],
+    standalone: false
 })
 export class TagsWidgetComponent extends BaseWrapperComponent {
 

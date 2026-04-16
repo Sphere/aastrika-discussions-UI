@@ -14,9 +14,10 @@ import { NavigationServiceService } from '../../navigation-service.service';
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-discuss-tags',
-  templateUrl: './discuss-tags.component.html',
-  styleUrls: ['./discuss-tags.component.scss']
+    selector: 'lib-discuss-tags',
+    templateUrl: './discuss-tags.component.html',
+    styleUrls: ['./discuss-tags.component.scss'],
+    standalone: false
 })
 export class DiscussTagsComponent implements OnInit {
 

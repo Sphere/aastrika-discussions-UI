@@ -7,10 +7,11 @@ import * as _ from 'lodash'
 import { IdiscussionConfig } from '../../models/discussion-config.model';
 
 @Component({
-  selector: 'sb-base-wrapper',
-  templateUrl: './base-wrapper.component.html',
-  styleUrls: ['./base-wrapper.component.css'],
-  providers: [NavigationServiceService, EventsService]
+    selector: 'sb-base-wrapper',
+    templateUrl: './base-wrapper.component.html',
+    styleUrls: ['./base-wrapper.component.css'],
+    providers: [NavigationServiceService, EventsService],
+    standalone: false
 })
 export class BaseWrapperComponent implements OnInit {
 

@@ -5,9 +5,10 @@ import * as _ from 'lodash'
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-app-loader',
-  templateUrl: './app-loader.component.html',
-  styleUrls: ['./app-loader.component.css']
+    selector: 'lib-app-loader',
+    templateUrl: './app-loader.component.html',
+    styleUrls: ['./app-loader.component.css'],
+    standalone: false
 })
 export class AppLoaderComponent implements OnInit {
 

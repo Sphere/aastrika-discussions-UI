@@ -7,10 +7,10 @@ import * as CONSTANTS from './../../common/constants.json';
 import { NSDiscussData } from './../../models/discuss.model';
 
 @Component({
-  selector: 'lib-related-discussion',
-  templateUrl: './related-discussion.component.html',
-  styleUrls: ['./related-discussion.component.scss'],
-  // host: { class: 'margin-left-l' },
+    selector: 'lib-related-discussion',
+    templateUrl: './related-discussion.component.html',
+    styleUrls: ['./related-discussion.component.scss'],
+    standalone: false
 })
 export class RelatedDiscussionComponent implements OnInit, OnChanges {
   @Input() catId: any;

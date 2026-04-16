@@ -13,9 +13,10 @@ import { IdiscussionConfig, IMenuOptions } from '../../models/discussion-config.
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-side-pannel',
-  templateUrl: './side-pannel.component.html',
-  styleUrls: ['./side-pannel.component.scss']
+    selector: 'lib-side-pannel',
+    templateUrl: './side-pannel.component.html',
+    styleUrls: ['./side-pannel.component.scss'],
+    standalone: false
 })
 export class SidePannelComponent implements OnInit, OnDestroy {
 
