@@ -13,30 +13,30 @@
     "build-lib": "ng build && npm run copy:assets"
   },
   "dependencies": {
-    "@angular/animations": "^16.2.12",
-    "@angular/common": "^16.2.12",
-    "@angular/compiler": "^16.2.12",
-    "@angular/core": "^16.2.12",
-    "@angular/forms": "^16.2.12",
-    "@angular/platform-browser": "^16.2.12",
-    "@angular/platform-browser-dynamic": "^16.2.12",
-    "@angular/router": "^16.2.12",
+    "@angular/animations": "^17.3.12",
+    "@angular/common": "^17.3.12",
+    "@angular/compiler": "^17.3.12",
+    "@angular/core": "^17.3.12",
+    "@angular/forms": "^17.3.12",
+    "@angular/platform-browser": "^17.3.12",
+    "@angular/platform-browser-dynamic": "^17.3.12",
+    "@angular/router": "^17.3.12",
     "copyfiles": "^2.4.1",
     "core-js": "^2.5.4",
     "dayjs": "^1.10.4",
     "ngx-infinite-scroll": "^16.0.0",
     "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
-    "zone.js": "~0.13.3"
+    "zone.js": "~0.14.10"
   },
   "resolutions": {
     "source-map": "0.7.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.16",
-    "@angular/cli": "^16.2.16",
-    "@angular/compiler-cli": "^16.2.12",
-    "@angular/language-service": "^16.2.12",
+    "@angular-devkit/build-angular": "^17.3.17",
+    "@angular/cli": "^17.3.17",
+    "@angular/compiler-cli": "^17.3.12",
+    "@angular/language-service": "^17.3.12",
     "@project-sunbird/client-services": "^3.9.5",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
@@ -52,13 +52,13 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.7.0",
     "lodash-es": "^4.17.20",
-    "ng-packagr": "^16.2.3",
+    "ng-packagr": "^17.3.0",
     "ngx-chips": "3.0.0",
     "protractor": "~7.0.0",
     "ts-jest": "^29.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
-    "typescript": "^4.9.5"
+    "typescript": "^5.4.5"
   },
   "description": "Sunbird discussions ui library",
   "repository": {
