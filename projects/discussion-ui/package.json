@@ -15,12 +15,12 @@
   },
   "homepage": "https://github.com/Sunbird-Ed/discussions-UI.git#readme",
   "peerDependencies": {
-    "@angular/common": "^17.3.12",
-    "@angular/core": "^17.3.12",
+    "@angular/common": "^18.2.14",
+    "@angular/core": "^18.2.14",
     "@project-sunbird/client-services": "^3.9.5",
     "lodash-es": "^4.17.20",
     "ngx-chips": "3.0.0",
-    "ngx-infinite-scroll": "^17.0.1"
+    "ngx-infinite-scroll": "^18.0.0"
   },
   "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.",
   "scripts": {
