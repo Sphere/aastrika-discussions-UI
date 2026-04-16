@@ -5,9 +5,13 @@
 'circle-xxl' : size=== 'xxl',
 'circle-xl-s' : size=== 'xl-s',
 'circle-xxl-s': size=== 'xxl-s'}" [ngStyle]="{'background-color':  circleColor }">
-  <img *ngIf="!showInitials" src="{{photoUrl}}" [alt]="photoUrl? '' :(name || initials || size || random)">
+  @if (!showInitials) {
+    <img src="{{photoUrl}}" [alt]="photoUrl? '' :(name || initials || size || random)">
+  }
 
-  <div *ngIf="showInitials" class="initials" i18n-aria-label>
-    {{ initials }}
-  </div>
+  @if (showInitials) {
+    <div class="initials" i18n-aria-label>
+      {{ initials }}
+    </div>
+  }
 </div>

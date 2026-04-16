@@ -1,21 +1,23 @@
 <!-- <lib-app-loader *ngIf="showLoader"></lib-app-loader> -->
 <div class="flex flex-1 margin-top-m flex-column discussion-tag-content">
-    <ng-container>
-        <input #question autocomplete="off" maxlength="20" [(ngModel)]="query" class="search" placeholder="Search by name" [required]="false" />
-    </ng-container>
+  <ng-container>
+    <input #question autocomplete="off" maxlength="20" [(ngModel)]="query" class="search" placeholder="Search by name" [required]="false" />
+  </ng-container>
 
-    <ng-container *ngIf="filteredTags && filteredTags.length > 0">
-        <div class="tags">
-            <!-- <div *ngFor="let tag of filteredTags | pipeListFilter:'score,value':query" class="tag" [ngStyle]="getBgColor(tag.value)" (click)="getAllDiscussions(tag)"> -->
-            <div *ngFor="let tag of filteredTags | pipeListFilter:'score,value':query" class="tag" (click)="getAllDiscussions(tag)">
-                <!-- Can enable random colors from below commented code -->
-                <!-- <div *ngFor="let tag of filteredTags | pipeFilter:'score,value':query"
-        class="tag text-capitalize" [ngStyle]="getBgColor(tag.value)"> -->
-                <span class="margin-left-m">{{tag.value}}</span>
-                <span class="count text-center">
-                  <p class="tag_score margin-remove">{{tag.score}}</p>
-                </span>
-            </div>
+  @if (filteredTags && filteredTags.length > 0) {
+    <div class="tags">
+      <!-- <div *ngFor="let tag of filteredTags | pipeListFilter:'score,value':query" class="tag" [ngStyle]="getBgColor(tag.value)" (click)="getAllDiscussions(tag)"> -->
+      @for (tag of filteredTags | pipeListFilter:'score,value':query; track tag) {
+        <div class="tag" (click)="getAllDiscussions(tag)">
+          <!-- Can enable random colors from below commented code -->
+          <!-- <div *ngFor="let tag of filteredTags | pipeFilter:'score,value':query"
+          class="tag text-capitalize" [ngStyle]="getBgColor(tag.value)"> -->
+          <span class="margin-left-m">{{$any(tag).value}}</span>
+          <span class="count text-center">
+            <p class="tag_score margin-remove">{{$any(tag).score}}</p>
+          </span>
         </div>
-    </ng-container>
+      }
+    </div>
+  }
 </div>

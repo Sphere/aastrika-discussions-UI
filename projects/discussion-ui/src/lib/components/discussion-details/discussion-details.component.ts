@@ -3,7 +3,7 @@ import { DiscussionService } from './../../services/discussion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, Input, Renderer2, Output, EventEmitter } from '@angular/core';
 import { NSDiscussData } from './../../models/discuss.model';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import * as CONSTANTS from '../../common/constants.json';
 /* tslint:disable */
 import * as _ from 'lodash'
@@ -27,29 +27,29 @@ const MSGS = {
 })
 export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   @Input() topicId: any;
-  @Input() slug: string;
-  @Input() widget: boolean;
-  @Input() cid: number;
+  @Input() slug!: string;
+  @Input() widget!: boolean;
+  @Input() cid!: number;
 
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
 
   routeParams: any;
   currentActivePage = 1;
   currentFilter = 'timestamp'; // 'recent
-  data: any;
+  data!: any;
   paginationData!: any;
   pager = {};
-  postAnswerForm!: UntypedFormGroup;
-  UpdatePostAnswerForm: UntypedFormGroup;
-  replyForm: UntypedFormGroup;
+  postAnswerForm!: FormGroup;
+  UpdatePostAnswerForm!: FormGroup;
+  replyForm!: FormGroup;
   fetchSingleCategoryLoader = false;
-  paramsSubscription: Subscription;
+  paramsSubscription: Subscription | null = null;
   editMode = false;
   updatedPost = false;
   contentPost: any;
   editContentIndex: any;
-  mainUid: number;
-  similarPosts: any[];
+  mainUid!: number;
+  similarPosts!: any[];
   showEditTopicModal = false;
   editableTopicDetails: any;
   dropdownContent = true;
@@ -71,7 +71,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
      */
     this.renderer.listen('window', 'click', (e: Event) => {
       // tslint:disable-next-line:no-string-literal
-      if (e.target['id'] !== 'group-actions') {
+      if (e?.target['id'] !== 'group-actions') {
         this.dropdownContent = true;
       }
     });
@@ -118,7 +118,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   }
 
   // new method
-  acceptData(discuss) {
+  acceptData(discuss: any) {
     // debugger
     const matchedTopic = _.find(this.telemetryUtils.getContext(), { type: 'Topic' });
     if (matchedTopic) {
@@ -174,7 +174,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  appendResponse(data) {
+  appendResponse(data: any) {
     this.data = data;
     this.paginationData = _.get(data, 'pagination');
     this.mainUid = _.get(data, 'loggedInUser.uid');
@@ -296,7 +296,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  confirmDelete(pid) {
+  confirmDelete(pid: any) {
     if (window.confirm(MSGS.deletePost)) {
       this.deletePost(pid);
     }
@@ -328,7 +328,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     return { color, 'background-color': bgColor };
   }
 
-  stringToColor(title) {
+  stringToColor(title: string) {
     let hash = 0;
 
     for (let i = 0; i < title.length; i++) {
@@ -345,7 +345,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     return 'rgba(255, 255, 255, 80%)';
   }
 
-  logTelemetry(event, data?) {
+  logTelemetry(event: any, data?: any) {
     const pid = _.get(data, 'pid') || _.get(data, 'mainPid') ?
       { id: _.get(data, 'pid') || _.get(data, 'mainPid'), type: 'Post' } : {};
     this.telemetryUtils.uppendContext(pid);

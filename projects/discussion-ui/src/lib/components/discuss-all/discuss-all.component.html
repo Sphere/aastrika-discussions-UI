@@ -1,91 +1,99 @@
 <div class="main-div">
 
-    <!-- <button (click)="startDiscussion();logTelemetry($event)" class="df-btn df-start-btn" data-toggle="modal"
-        data-target="#myModal" id="start-discussion">Start Discussion</button> -->
+  <!-- <button (click)="startDiscussion();logTelemetry($event)" class="df-btn df-start-btn" data-toggle="modal"
+data-target="#myModal" id="start-discussion">Start Discussion</button> -->
 
 
-    <div *ngIf="displayState === 'VIEW_ALL'" class="flex flex-1 custom discussion_outer_box">
-        <div class="flex flex-3 flex-column discussion_main_box">
-            <div class="flex gap-2 items-center">
-                <span class="circle-text cursor-text"><span
-                    class="circle-label cursor-text">{{ context.userName | createInitials }}</span></span>
-                <div class="flex flex-1 cursor-pointer margin-fix height-48" (click)="startDiscussion();logTelemetry($event)" data-toggle="modal" data-target="#myModal" id="start-discussion">
-                    <a href="javascript:void(0)" class="flex flex-1 cursor-pointer margin-fix height-48  w-6/12" i18n-aria-label role="link">
-                        <div class="flex flex-1 items-center border discuss border-solid discuss-border ws-mat-primary-background-op100 ">
-                            <div class="w-full discuss truncate">
-    
-                                <span class="overflow ml-4 start-btn-hint mb-0 mat-body-1" i18n>Start a Conversation</span>
-                            </div>
-                            <div>
-                                <img src="./assets/discussion-ui/images/send-icon.png">
-                            </div>
-                            <!-- <div class="discuss-home text-white flex items-center justify-center cursor-pointer mat-subheading-2">
-                                Start discussion
-                            </div> -->
-                        </div>
-                        <!-- <div class="text-box">Ask a question or post an idea</div> 
-                  <div class="buton">start discussion</div> -->
-                    </a>
-                </div>
-            </div>
-            
-
-            <ng-container *ngIf="discussionList  && discussionList.length >= 0" >
-                <div [ngClass]="{ 'mobile-bottom' : discussionList.length === 0}" class="comment-count font-normal font-sans text-2xl py-6 pl-2">
-                    {{discussionList.length}} <span i18n>Comments</span> 
-                </div>
-            </ng-container>
-
-            <!-- <ng-container>
-                <div class="flex flex-1 flex-row margin-fix tab_margin">
-                    <div class="flex flex-1 filter max-height-60">
+@if (displayState === 'VIEW_ALL') {
+  <div class="flex flex-1 custom discussion_outer_box">
+    <div class="flex flex-3 flex-column discussion_main_box">
+      <div class="flex gap-2 items-center">
+        <span class="circle-text cursor-text"><span
+        class="circle-label cursor-text">{{ context.userName | createInitials }}</span></span>
+        <div class="flex flex-1 cursor-pointer margin-fix height-48" (click)="startDiscussion();logTelemetry($event)" data-toggle="modal" data-target="#myModal" id="start-discussion">
+          <a href="javascript:void(0)" class="flex flex-1 cursor-pointer margin-fix height-48  w-6/12" i18n-aria-label role="link">
+            <div class="flex flex-1 items-center border discuss border-solid discuss-border ws-mat-primary-background-op100 ">
+              <div class="w-full discuss truncate">
+                <span class="overflow ml-4 start-btn-hint mb-0 mat-body-1" i18n>Start a Conversation</span>
+              </div>
+              <div>
+                <img src="./assets/discussion-ui/images/send-icon.png">
+              </div>
+              <!-- <div class="discuss-home text-white flex items-center justify-center cursor-pointer mat-subheading-2">
+              Start discussion
+            </div> -->
+          </div>
+          <!-- <div class="text-box">Ask a question or post an idea</div>
+          <div class="buton">start discussion</div> -->
+        </a>
+      </div>
+    </div>
+    @if (discussionList  && discussionList.length >= 0) {
+      <div [ngClass]="{ 'mobile-bottom' : discussionList.length === 0}" class="comment-count font-normal font-sans text-2xl py-6 pl-2">
+        {{discussionList.length}} <span i18n>Comments</span>
+      </div>
+    }
+    <!-- <ng-container>
+    <div class="flex flex-1 flex-row margin-fix tab_margin">
+      <div class="flex flex-1 filter max-height-60">
                         <a href="javascript:void(0)" class="filter-option" [ngClass]="{'tabs-active' : currentFilter === 'recent',
           ' font-medium':currentFilter !== 'recent'}" mat-button (click)="filter('recent')" role="button">Recent</a>
                         <a href="javascript:void(0)" class="filter-option" [ngClass]="{'tabs-active' : currentFilter === 'popular',
           ' font-medium':currentFilter !== 'popular'}" mat-button (click)="filter('popular')" role="button">Popular</a>
-                        <a href="javascript:void(0)" class="filter-option watching_link" mat-button role="button">Watching</a>
-                    </div>
-                    <div class="flex items-center">
-                        <a class="all_category_link mat-subheading-2 margin-remove">All categories </a>
-                    </div>
-                </div>
-            </ng-container> -->
-            <lib-app-loader *ngIf="showLoader === true"></lib-app-loader>
-
-
-            <ng-container *ngIf="discussionList  && discussionList.length > 0">
-                <div *ngFor="let data of discussionList; let last = last " id="discuss-card" [ngClass]="{'last-votes': last}">
-                    <!-- (click)="navigateToDiscussionDetails(data);logTelemetry($event)" -->
-                    
-                    <lib-discuss-card *ngIf="data.tid"
-                    [userDetails]="privilegesData"
-                    [discussionData]="data" [cid]="cIds" [topicId] ="data.tid" [slug]="data.slug" (voteChange)="voteEvent($event)"></lib-discuss-card>
-                </div>
-            </ng-container>
-
-            <ng-container *ngIf=" !(discussionList && discussionList.length > 0)">
-                <!-- hidden is added in scss -->
-                <div class="discuss-card-content cursor-pointer ">
-                    <div class="no-data-label">No Data</div>
-                    <div>
-                        <span>&nbsp;</span>
-                    </div>
-                </div>
-            </ng-container>
-            <!-- <div class="flex flex-1 flex-column margin-fix pagination-container">
-            <ws-app-pagination [pager]="pager" (changePage)="navigateWithPage($event)"></ws-app-pagination>
-        </div> -->
-        </div>
-        <div *ngIf="!isWidget" class="flex flex-1 right_tag_box margin-left-xl" #stickyMenu [class.sticky]="sticky">
-            <lib-discuss-trending-tags [tags]="trendingTags" (stateChange)="acceptData($event)"></lib-discuss-trending-tags>
-        </div>
+        <a href="javascript:void(0)" class="filter-option watching_link" mat-button role="button">Watching</a>
+      </div>
+      <div class="flex items-center">
+        <a class="all_category_link mat-subheading-2 margin-remove">All categories </a>
+      </div>
     </div>
-
-    <lib-discuss-start (close)="closeModal($event)" *ngIf="showStartDiscussionModal" [categoryId]="startDiscussionCategoryId">
-    </lib-discuss-start>
-
-    <lib-discuss-moderation  (close)="closeModerationModal($event)" *ngIf="showModerationModal"></lib-discuss-moderation>
-    <div *ngIf=" displayState && displayState === 'REPLY' ">
-        <lib-reply-comment></lib-reply-comment>
+  </ng-container> -->
+  @if (showLoader === true) {
+    <lib-app-loader></lib-app-loader>
+  }
+  @if (discussionList  && discussionList.length > 0) {
+    @for (data of discussionList; track data; let last = $last) {
+      <div id="discuss-card" [ngClass]="{'last-votes': last}">
+        <!-- (click)="navigateToDiscussionDetails(data);logTelemetry($event)" -->
+        @if (data.tid) {
+          <lib-discuss-card
+            [userDetails]="privilegesData"
+          [discussionData]="data" [cid]="cIds" [topicId] ="data.tid" [slug]="data.slug" (voteChange)="voteEvent($event)"></lib-discuss-card>
+        }
+      </div>
+    }
+  }
+  @if ( !(discussionList && discussionList.length > 0)) {
+    <!-- hidden is added in scss -->
+    <div class="discuss-card-content cursor-pointer ">
+      <div class="no-data-label">No Data</div>
+      <div>
+        <span>&nbsp;</span>
+      </div>
     </div>
+  }
+  <!-- <div class="flex flex-1 flex-column margin-fix pagination-container">
+  <ws-app-pagination [pager]="pager" (changePage)="navigateWithPage($event)"></ws-app-pagination>
+</div> -->
+</div>
+@if (!isWidget) {
+  <div class="flex flex-1 right_tag_box margin-left-xl" #stickyMenu [class.sticky]="sticky">
+    <lib-discuss-trending-tags [tags]="trendingTags" (stateChange)="acceptData($event)"></lib-discuss-trending-tags>
+  </div>
+}
+</div>
+}
+
+@if (showStartDiscussionModal) {
+  <lib-discuss-start (close)="closeModal($event)" [categoryId]="startDiscussionCategoryId">
+  </lib-discuss-start>
+}
+
+@if (showModerationModal) {
+  <lib-discuss-moderation  (close)="closeModerationModal($event)"></lib-discuss-moderation>
+}
+@if ( displayState && displayState === 'REPLY' ) {
+  <div>
+    <lib-reply-comment></lib-reply-comment>
+  </div>
+}
 </div>

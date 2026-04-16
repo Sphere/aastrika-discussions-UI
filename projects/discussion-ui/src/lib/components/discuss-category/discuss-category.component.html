@@ -2,27 +2,29 @@
 <!-- <button (click)="startDiscussion();logTelemetry($event)" *ngIf="isTopicCreator" class="sb-btn sb-btn-primary sb-btn-normal mb-16" id="start-discussion">Start Discussion</button> -->
 
 <div class="flex flex-row justify-between margin-bottom-l">
-    <div class="recent-tabs">
-        <div class="tabs-content">
-            <div class="tabs-filter">
-                <a role="button" class="filter-option df-filter-option tabs-active" id="most-karma">
-            All </a>
-                <a role="button" class="filter-option df-filter-option" id="top-poster">
-            Watching </a>
+  <div class="recent-tabs">
+    <div class="tabs-content">
+      <div class="tabs-filter">
+        <a role="button" class="filter-option df-filter-option tabs-active" id="most-karma">
+        All </a>
+        <a role="button" class="filter-option df-filter-option" id="top-poster">
+        Watching </a>
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- <div class="discuss-home text-white flex items-center justify-center cursor-pointer mat-subheading-2 margin-remove"> Start discussion </div> -->
+  <!-- <div class="discuss-home text-white flex items-center justify-center cursor-pointer mat-subheading-2 margin-remove"> Start discussion </div> -->
 </div>
 
 <div class="discuss-category-cards">
-    <ng-container *ngFor="let data of categories">
-        <div (click)="navigateToDiscussionPage(data?.cid, data?.slug);logTelemetry($event)" class="categories-card-content" id="category-card">
-            <lib-category-card [category]="data" class="card-comp"></lib-category-card>
-        </div>
-    </ng-container>
+  @for (data of categories; track data) {
+    <div (click)="navigateToDiscussionPage(data?.cid, data?.slug);logTelemetry($event)" class="categories-card-content" id="category-card">
+      <lib-category-card [category]="data" class="card-comp"></lib-category-card>
+    </div>
+  }
 </div>
 
-<lib-discuss-start (close)="closeModal($event)" [categoryId]="categoryId" *ngIf="showStartDiscussionModal"></lib-discuss-start>
+@if (showStartDiscussionModal) {
+  <lib-discuss-start (close)="closeModal($event)" [categoryId]="categoryId"></lib-discuss-start>
+}

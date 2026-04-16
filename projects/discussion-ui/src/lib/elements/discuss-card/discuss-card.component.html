@@ -3,23 +3,28 @@
     <!-- user name -->
     <div class="user_name_div d-flex">
       <span class="circle-text"><span class="circle-label">{{
-          discussionData?.user?.username | splitInitials
-          }}</span></span>
+        discussionData?.user?.username | splitInitials
+      }}</span></span>
 
       <div class="post_user_text_box">
-        <span class="discuss-user-label" *ngIf="discussionData?.user?.username">{{ discussionData?.user?.username
+        @if (discussionData?.user?.username) {
+          <span class="discuss-user-label">{{ discussionData?.user?.username
           }}</span>
-        <span class="discuss-user-label" *ngIf="!discussionData?.user?.username">{{ "Anonymous" }}</span>
+        }
+        @if (!discussionData?.user?.username) {
+          <span class="discuss-user-label">{{ "Anonymous" }}</span>
+        }
         <span class="timing">{{
           discussionData.lastposttime | pipeRelativeTime
-          }}</span>
+        }}</span>
       </div>
 
       <!-- <div>
-                <img class="h-6" src="./assets/discussion-ui/images/more-vert.png">
-            </div> -->
+      <img class="h-6" src="./assets/discussion-ui/images/more-vert.png">
+    </div> -->
 
-      <div class="relative" *ngIf="discussionData?.user.uid == userDetails?.uid">
+    @if (discussionData?.user.uid == userDetails?.uid) {
+      <div class="relative">
         <div class="kabab-menu" id="group-actions" (click)="onMenuClick()"></div>
         <div class="kabab-menu-dropdown-content" [hidden]="dropdownContent">
           <div>
@@ -30,152 +35,200 @@
           </div>
         </div>
       </div>
-      <!-- <span class="timing">{{discussionData.lastposttime | date}}</span> -->
-      <!-- <span class="timing">{{discussionData.lastposttime | pipeRelativeTime}}</span> -->
-    </div>
+    }
+    <!-- <span class="timing">{{discussionData.lastposttime | date}}</span> -->
+    <!-- <span class="timing">{{discussionData.lastposttime | pipeRelativeTime}}</span> -->
   </div>
-  <!-- title -->
-  <div class="discuss_main_text_box">
-    <a class="cursor-default" href="javascript:void(0)" i18n-aria-label role="link">
-      <h3 class="discuss-card-title pl-32 mb-1" *ngIf="discussionData?.title" [innerHTML]="discussionData?.title"></h3>
-      <!-- <h3
-        class="discuss-card-title"
-        *ngIf="!discussionData?.title && discussionData?.topic?.title"
-        [innerHTML]="discussionData?.topic?.title"
-      ></h3>
-      <h3
-        class="discuss-card-title"
+</div>
+<!-- title -->
+<div class="discuss_main_text_box">
+  <a class="cursor-default" href="javascript:void(0)" i18n-aria-label role="link">
+    @if (discussionData?.title) {
+      <h3 class="discuss-card-title pl-32 mb-1" [innerHTML]="discussionData?.title"></h3>
+    }
+    <!-- <h3
+    class="discuss-card-title"
+    *ngIf="!discussionData?.title && discussionData?.topic?.title"
+    [innerHTML]="discussionData?.topic?.title"
+  ></h3>
+  <h3
+    class="discuss-card-title"
         *ngIf="
           !discussionData?.title &&
           !discussionData?.topic?.title &&
           discussionData?.name
         "
-        [innerHTML]="discussionData?.name"
-      ></h3> -->
-    </a>
-  </div>
-  <div class="discuss-card-subtitle responsive display-hidden">
-    <span *ngIf="discussionData?.category?.name" class="discuss-card-label">
+    [innerHTML]="discussionData?.name"
+  ></h3> -->
+</a>
+</div>
+<div class="discuss-card-subtitle responsive display-hidden">
+  @if (discussionData?.category?.name) {
+    <span class="discuss-card-label">
       <img src="./assets/discussion-ui/images/Buffer-512.svg" alt="Buffer-image" />
       <!-- {{ discussionData.category.name }} -->
     </span>
-    <!-- <span class="dot"></span> -->
-    <!-- <span class="discuss-user-label" *ngIf="discussionData?.user?.username">{{discussionData?.user?.username}}</span>
-      <span class="discuss-user-label" *ngIf="!(discussionData?.user?.username)">{{'Anonymous'}}</span>
-      <span class="timing">{{discussionData.lastposttime | date}}</span> -->
-  </div>
-  <!-- comment -->
-  <!-- <p class="discussion-card-comment" [innerHTML]="discussionData?.teaser.content"></p> -->
+  }
+  <!-- <span class="dot"></span> -->
+  <!-- <span class="discuss-user-label" *ngIf="discussionData?.user?.username">{{discussionData?.user?.username}}</span>
+  <span class="discuss-user-label" *ngIf="!(discussionData?.user?.username)">{{'Anonymous'}}</span>
+  <span class="timing">{{discussionData.lastposttime | date}}</span> -->
+</div>
+<!-- comment -->
+<!-- <p class="discussion-card-comment" [innerHTML]="discussionData?.teaser.content"></p> -->
 
-  <div class="discuss-card-comments">
-    <div class="discuss-comments-area mb-2">
-      <span class="votes-content">
-        <span class="discuss-card-label" (click)="replyHandler(discussionData)" i18n>
+<div class="discuss-card-comments">
+  <div class="discuss-comments-area mb-2">
+    <span class="votes-content">
+      <span class="discuss-card-label" (click)="replyHandler(discussionData)" i18n>
           Reply</span>
 
-        <span class="views-content">
+      <span class="views-content">
+        @if (discussionData.votes <= 0) {
           <img (click)="upvote(discussionData)" src="./assets/discussion-ui/images/thumbs-up.png"
-            *ngIf="discussionData.votes <= 0" alt="thumbs-up-image" />
-          <img *ngIf="discussionData.votes > 0 && discussionData.upvotes >= 0" (click)="downvote(discussionData)"
+            alt="thumbs-up-image" />
+        }
+        @if (discussionData.votes > 0 && discussionData.upvotes >= 0) {
+          <img (click)="downvote(discussionData)"
             src="./assets/discussion-ui/images/red-thumbs-up.png" alt="red-thumbs-up" />
-        </span>
-        <span class="view-count" *ngIf="discussionData.votes > 0">{{ discussionData.votes }}
-        </span>
-        <span *ngIf="discussionData.downvotes > 0"></span>
+        }
       </span>
+      @if (discussionData.votes > 0) {
+        <span class="view-count">{{ discussionData.votes }}
+        </span>
+      }
+      @if (discussionData.downvotes > 0) {
+        <span></span>
+      }
+    </span>
 
-      <!-- <span class="views-content ">
-          <img src="./assets/discussion-ui/images/trending_up.svg " alt="views-image ">
-          <span>{{discussionData.viewcount || 0}} Views</span>
-              </span> -->
+    <!-- <span class="views-content ">
+    <img src="./assets/discussion-ui/images/trending_up.svg " alt="views-image ">
+    <span>{{discussionData.viewcount || 0}} Views</span>
+  </span> -->
 
-      <!-- <div class="cursor-pointer comments-count " *ngIf="IsSingleComent(discussionData.postcount) ">{{((discussionData.postcount || 1) -1) }} comment</div> -->
-      <!--<div class="cursor-pointer comments-count " *ngIf="!IsSingleComent(discussionData.postcount) ">{{((discussionData.postcount || 1) -1) }} comments</div>-->
-    </div>
-  </div>
+  <!-- <div class="cursor-pointer comments-count " *ngIf="IsSingleComent(discussionData.postcount) ">{{((discussionData.postcount || 1) -1) }} comment</div> -->
+  <!--<div class="cursor-pointer comments-count " *ngIf="!IsSingleComent(discussionData.postcount) ">{{((discussionData.postcount || 1) -1) }} comments</div>-->
+</div>
+</div>
 
-  <span class="votes-content" *ngIf="discussionData?.postcount > 1">
+@if (discussionData?.postcount > 1) {
+  <span class="votes-content">
     <div class="row discuss-card-label label-wrapper">
-      <div *ngIf="!replyFlag" (click)="showReply(discussionData)">
-        <div><span i18n>View </span> {{ discussionData?.postcount - 1 }} <span i18n>Replies</span></div>
-      </div>
-      <div *ngIf="replyFlag" (click)="showReply()">
-        Hide {{ discussionData?.postcount - 1 }} Replies
-      </div>
+      @if (!replyFlag) {
+        <div (click)="showReply(discussionData)">
+          <div><span i18n>View </span> {{ discussionData?.postcount - 1 }} <span i18n>Replies</span></div>
+        </div>
+      }
+      @if (replyFlag) {
+        <div (click)="showReply()">
+          Hide {{ discussionData?.postcount - 1 }} Replies
+        </div>
+      }
       <span class="img-content cursor-text">
-        <img *ngIf="!replyFlag" src="./assets/discussion-ui/images/downarrow.png" class="img-style" />
+        @if (!replyFlag) {
+          <img src="./assets/discussion-ui/images/downarrow.png" class="img-style" />
+        }
       </span>
       <span class="img-content cursor-text">
-        <img *ngIf="replyFlag" src="./assets/discussion-ui/images/uparrow.png" class="img-style" />
+        @if (replyFlag) {
+          <img src="./assets/discussion-ui/images/uparrow.png" class="img-style" />
+        }
       </span>
     </div>
   </span>
-  <div [ngClass]="replyFlag ? 'd-block' : 'd-hidden'">
-    <lib-app-loader *ngIf="showLoader"></lib-app-loader>
-    <div *ngFor="let post of data?.posts" class="discuss-card-content cursor-default pl-27">
-      
-      <div class="discuss-card-header" *ngIf="!showLoader && replyFlag && post?.index != 0">
-        <div class="discussion-details">
-          <!-- user name -->
-          <div class="user_name_div d-flex">
-            <span class="circle-text">
-              <span class="circle-label">
-                {{ post?.user?.username | splitInitials }}
-              </span>
-            </span>
-            <div class="post_user_text_box">
-              <span class="discuss-user-label" *ngIf="discussionData?.user?.username">
-                {{ post?.user?.username }}
-              </span>
-              <span class="timing">
-                {{ post?.timestamp | pipeRelativeTime }}
-              </span>
-              <p class="discussion-card-comment" [innerHTML]="post?.content"></p>
-              <div *ngIf="post?.uid == data?.loggedInUser?.uid">
-                <div class="post-menu" *ngIf="!showEditPost" id="reply-actions"
-                  (click)="onReplyMenuClick(); activePost = post"></div>
-                <div class="post-menu-dropdown-content" [class.active]="post === activePost">
-                  <div>
-                    <div class="list" (click)="editReplyPost(post, data)" i18n>
-                      Edit
-                    </div>
-                    <div class="list" (click)="deleteReply(post, data)" i18n>
-                      Delete
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <span class="views-content-reply mb-2">
-                <img (click)="replyUpvote(post)" src="./assets/discussion-ui/images/thumbs-up.png"
-                  *ngIf="post.votes <= 0" alt="thumbs-up-image" />
-                <img *ngIf="post.votes > 0" (click)="downReplyvote(post)"
-                  src="./assets/discussion-ui/images/red-thumbs-up.png" alt="red-thumbs-up" />
-                <span class="view-count" *ngIf="post.votes > 0">{{ post.votes }}
+}
+<div [ngClass]="replyFlag ? 'd-block' : 'd-hidden'">
+  @if (showLoader) {
+    <lib-app-loader></lib-app-loader>
+  }
+  @for (post of data?.posts; track post) {
+    <div class="discuss-card-content cursor-default pl-27">
+      @if (!showLoader && replyFlag && post?.index != 0) {
+        <div class="discuss-card-header">
+          <div class="discussion-details">
+            <!-- user name -->
+            <div class="user_name_div d-flex">
+              <span class="circle-text">
+                <span class="circle-label">
+                  {{ post?.user?.username | splitInitials }}
                 </span>
               </span>
+              <div class="post_user_text_box">
+                @if (discussionData?.user?.username) {
+                  <span class="discuss-user-label">
+                    {{ post?.user?.username }}
+                  </span>
+                }
+                <span class="timing">
+                  {{ post?.timestamp | pipeRelativeTime }}
+                </span>
+                <p class="discussion-card-comment" [innerHTML]="post?.content"></p>
+                @if (post?.uid == data?.loggedInUser?.uid) {
+                  <div>
+                    @if (!showEditPost) {
+                      <div class="post-menu" id="reply-actions"
+                      (click)="onReplyMenuClick(); activePost = post"></div>
+                    }
+                    <div class="post-menu-dropdown-content" [class.active]="post === activePost">
+                      <div>
+                        <div class="list" (click)="editReplyPost(post, data)" i18n>
+                      Edit
+                    </div>
+                        <div class="list" (click)="deleteReply(post, data)" i18n>
+                      Delete
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+                <span class="views-content-reply mb-2">
+                  @if (post.votes <= 0) {
+                    <img (click)="replyUpvote(post)" src="./assets/discussion-ui/images/thumbs-up.png"
+                      alt="thumbs-up-image" />
+                  }
+                  @if (post.votes > 0) {
+                    <img (click)="downReplyvote(post)"
+                      src="./assets/discussion-ui/images/red-thumbs-up.png" alt="red-thumbs-up" />
+                  }
+                  @if (post.votes > 0) {
+                    <span class="view-count">{{ post.votes }}
+                    </span>
+                  }
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      }
     </div>
-  </div>
+  }
+</div>
 
-  <!-- <div class="tags margin-bottom-s">
-        <ng-container *ngIf="discussionData && discussionData.tags && discussionData.tags.length > 0"> -->
+<!-- <div class="tags margin-bottom-s">
+<ng-container *ngIf="discussionData && discussionData.tags && discussionData.tags.length > 0"> -->
   <!-- <span *ngFor="let tag of discussionData.tags" class="tag" [ngStyle]="getBgColor(tag.value)"> -->
   <!-- <span *ngFor="let tag of discussionData.tags" class="tag post_tag margin-right-s">
-            {{tag.value}}
-            </span>
-        </ng-container>
-    </div> -->
+  {{tag.value}}
+</span>
+</ng-container>
+</div> -->
 
-  <lib-discussion-delete (delete)="deleteTopicHandler()" (close)="closeDeleteModel($event)" *ngIf="showDeleteModel">
+@if (showDeleteModel) {
+  <lib-discussion-delete (delete)="deleteTopicHandler()" (close)="closeDeleteModel($event)">
   </lib-discussion-delete>
+}
+@if (showreplyDelete) {
   <lib-reply-delte (deleteReplyComment)="deleteReplyHandler()" (close)="closeReplyDeleteModel($event)"
-    *ngIf="showreplyDelete">
+    >
   </lib-reply-delte>
-  <lib-post-reply (actionEvent)="editReplyHandler($event)" [mode]="'edit'" *ngIf="showEditPost && !showreplyDelete" [showCancel]="true"
-    [content]="contentPost?.content"></lib-post-reply>
+}
+@if (showEditPost && !showreplyDelete) {
+  <lib-post-reply (actionEvent)="editReplyHandler($event)" [mode]="'edit'" [showCancel]="true"
+  [content]="contentPost?.content"></lib-post-reply>
+}
+@if (showEditTopicModal) {
   <lib-discuss-edit [mode]="'edit'" [categoryId]="cid" [topicData]="editableTopicDetails" (close)="closeModal($event)"
-    *ngIf="showEditTopicModal"></lib-discuss-edit>
+  ></lib-discuss-edit>
+}
 </div>

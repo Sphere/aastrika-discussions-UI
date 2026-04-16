@@ -22,11 +22,11 @@ import { NavigationServiceService } from '../../navigation-service.service';
 export class DiscussTagsComponent implements OnInit {
 
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
-  query: string;
-  filteredTags: NSDiscussData.ITag[];
+  query: string = '';
+  filteredTags: NSDiscussData.ITag[] | null = [];
   showLoader = false;
   queryParam: any;
-  paramsSubscription: Subscription;
+  paramsSubscription!: Subscription;
   getParams: any;
   cIds: any;
   constructor(
@@ -54,7 +54,7 @@ export class DiscussTagsComponent implements OnInit {
 
   fetchAllTags() {
     this.showLoader = true;
-    this.discussionService.fetchAllTag().subscribe(data => {
+    this.discussionService.fetchAllTag().subscribe((data: any) => {
       this.showLoader = false;
       this.filteredTags = _.get(data, 'tags');
     }, error => {
@@ -69,7 +69,7 @@ export class DiscussTagsComponent implements OnInit {
       cids: cid
     }
     this.showLoader = true;
-    this.discussionService.contextBasedTags(req).subscribe(data => {
+    this.discussionService.contextBasedTags(req).subscribe((data: any) => {
       this.showLoader = false;
       this.filteredTags = _.get(data, 'result');
     }, error => {
@@ -85,7 +85,7 @@ export class DiscussTagsComponent implements OnInit {
     return { color, 'background-color': bgColor };
   }
 
-  getAllDiscussions(tag: { value: any }) {
+  getAllDiscussions(tag: any) {
     this.queryParam = tag.value;
     const tagdata = {
       tagname: ''

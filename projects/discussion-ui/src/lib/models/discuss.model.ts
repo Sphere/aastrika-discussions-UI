@@ -16,6 +16,15 @@ export namespace NSDiscussData {
     routerLink: string
   }
 
+  export interface IDiscussion {
+    posts: IPosts[];
+    title: string;
+    upvotes: number;
+    downvotes: number;
+    viewcount: number;
+    postcount: number;
+  }
+
   export interface IDiscussionData {
     cid: number
     tid: number
@@ -115,7 +124,7 @@ export namespace NSDiscussData {
   }
 
   export interface ITag {
-    value: string
+    value: any
     valueEscaped: string
     color: string
     bgColor: string
@@ -207,41 +216,42 @@ export namespace NSDiscussData {
   }
 
   export interface IPosts {
-    content: string
-    pid: number
-    tid: number
-    timestamp: number
-    uid: number
-    deleted: number | boolean
-    upvotes: number
-    downvotes: number
-    viewcount?: number
-    deleterUid: number
-    edited: number | boolean
-    votes: number
-    timestampISO: string
-    editedISO?: string
-    index: number
-    user: IUser
-    category?: ICategorie
-    topic?: ITopic
-    editor?: IEditor | null
-    bookmarked: boolean
-    upvoted: boolean
-    downvoted: boolean
-    bookmarks?: number | null
+    content: string;
+    pid: number;
+    tid: number;
+    timestamp: string;
+    uid: number;
+    deleted: number | boolean;
+    upvotes: number;
+    downvotes: number;
+    viewcount?: number;
+    deleterUid: number;
+    edited: number | boolean;
+    votes: number;
+    timestampISO: string;
+    editedISO?: string;
+    index: number;
+    user: IUser;
+    category?: ICategorie;
+    topic?: ITopic;
+    editor?: IEditor | null;
+    bookmarked: boolean;
+    upvoted: boolean;
+    downvoted: boolean;
+    bookmarks?: number | null;
     replies: {
-      hasMore: false
-      users: any[]
-      text: any
-      count: number
-    }
-    selfPost: boolean
-    display_edit_tools: boolean
-    display_delete_tools: boolean
-    display_moderator_tools: boolean
-    display_move_tools: boolean
-    display_post_menu: boolean
+      hasMore: false;
+      users: any[];
+      text: any;
+      count: number;
+      timestampISO: string;
+    };
+    selfPost: boolean;
+    display_edit_tools: boolean;
+    display_delete_tools: boolean;
+    display_moderator_tools: boolean;
+    display_move_tools: boolean;
+    display_post_menu: boolean;
   }
   
   export interface ITopic {

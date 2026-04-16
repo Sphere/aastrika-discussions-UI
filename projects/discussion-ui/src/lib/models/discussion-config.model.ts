@@ -15,7 +15,8 @@ export interface Icontext {
 
 export interface IMenuOptions {
   route: string
-  enable: boolean
+  enable: boolean,
+  label: string
 }
 
 export interface Icategory {

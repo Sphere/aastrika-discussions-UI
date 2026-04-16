@@ -1,19 +1,19 @@
 <h5 aria-label="Related discussions" class="related-discuss-label mb-16">Related discussions</h5>
-<ng-container *ngIf="relatedDiscussions && relatedDiscussions.length > 0">
-    <div *ngFor="let discussion of relatedDiscussions | slice:0:5;" class="related-discuss-card df-card margin-bottom-s flex flex-column">
-        <a href="javascript:void(0)" role="link" aria-label="related discussion post df-text-color" class="related-discuss-card-content" (click)="getDiscussion(discussion)">
-            <span class="discuss-user-label" [innerHTML]="discussion?.title"></span>
-        </a>
-        <div class="related-discuss-card-description">
-            <div class="category_text">
-                <img src="./assets/discussion-ui/images/Buffer-512.svg" alt="Buffer-image" class="margin-right-xs category_img">
-                <div class="category-name ws-mat-default-text" [innerHTML]="discussion.category.name">
-                </div>
-            </div>
-
-
-            <div class="separator-dot"></div>
-            <div class="time">{{ discussion.timestamp | pipeRelativeTime }}</div>
+@if (relatedDiscussions && relatedDiscussions.length > 0) {
+  @for (discussion of relatedDiscussions | slice:0:5; track discussion) {
+    <div class="related-discuss-card df-card margin-bottom-s flex flex-column">
+      <a href="javascript:void(0)" role="link" aria-label="related discussion post df-text-color" class="related-discuss-card-content" (click)="getDiscussion(discussion)">
+        <span class="discuss-user-label" [innerHTML]="discussion?.title"></span>
+      </a>
+      <div class="related-discuss-card-description">
+        <div class="category_text">
+          <img src="./assets/discussion-ui/images/Buffer-512.svg" alt="Buffer-image" class="margin-right-xs category_img">
+          <div class="category-name ws-mat-default-text" [innerHTML]="discussion.category.name">
+          </div>
         </div>
+        <div class="separator-dot"></div>
+        <div class="time">{{ discussion.timestamp | pipeRelativeTime }}</div>
+      </div>
     </div>
-</ng-container>
+  }
+}

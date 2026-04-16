@@ -1,95 +1,99 @@
-<lib-app-loader *ngIf="showLoader"></lib-app-loader>
+@if (showLoader) {
+  <lib-app-loader></lib-app-loader>
+}
 
 <div class="my-discussion">
-    <div class="profileCard">
-        <div class="profilecard-content">
-            <div class="profile-header-image">
-                <span class="box-text"><span class="circle-label"></span>{{ data?.username | splitInitials }}</span>
+  <div class="profileCard">
+    <div class="profilecard-content">
+      <div class="profile-header-image">
+        <span class="box-text"><span class="circle-label"></span>{{ data?.username | splitInitials }}</span>
 
-            </div>
-            <div class="info">
-                <div class="info-top-box flex justify-between">
-                    <div class="user_info_box">
-                        <div class="profile-name" [innerHTML]="data?.username"></div>
-                        <div class="profile-label department_name">{{data?.department}}</div>
-                        <div class="profile-label location_name">{{data?.location}} </div>
-                        <div class='profile-label'>{{data?.email || data?.username}}</div>
-                    </div>
-                    <div class="karma_box flex flex-column">
-                        <!-- <a class="karma_btn">
-                            <p class="margin-remove"><img src="assets/discussion-ui/images/karma.svg" class="karma_img margin-right-xs"> 56 Karma</p>
-                        </a> -->
-
-                    </div>
-                </div>
-
-                <div class="bottom_info_box">
-                    <div class="profile-data flex justify-between">
-                        <div class="profile-data-left">
-                            <span>
-                <span class="number">{{data?.topiccount || 0 }}</span>
-                            <span class="labels">Discussions</span>
-                            </span>
-                            <span class="post-count-area">
-                <span class="number">{{data?.postcount || 0 }}</span>
-                            <span class="labels">Posts</span>
-                            </span>
-                            <!-- <span class="post-count-area">
-                    <span class="number">45</span>
-                                <span class="labels">  Profile views</span>
-                            </span> -->
-                        </div>
-
-                        <!-- <div class="post-time-box">
-                            <p class="margin-remove mat-body-2 ws-mat-primary-text">Last online 4 minutes ago</p>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="info">
+        <div class="info-top-box flex justify-between">
+          <div class="user_info_box">
+            <div class="profile-name" [innerHTML]="data?.username"></div>
+            <div class="profile-label department_name">{{data?.department}}</div>
+            <div class="profile-label location_name">{{data?.location}} </div>
+            <div class='profile-label'>{{data?.email || data?.username}}</div>
+          </div>
+          <div class="karma_box flex flex-column">
+            <!-- <a class="karma_btn">
+            <p class="margin-remove"><img src="assets/discussion-ui/images/karma.svg" class="karma_img margin-right-xs"> 56 Karma</p>
+          </a> -->
 
         </div>
-    </div>
+      </div>
 
-    <ng-container>
-        <div class="recent-tabs">
-            <div class="tabs-content">
-                <div class="tabs-filter">
+      <div class="bottom_info_box">
+        <div class="profile-data flex justify-between">
+          <div class="profile-data-left">
+            <span>
+              <span class="number">{{data?.topiccount || 0 }}</span>
+              <span class="labels">Discussions</span>
+            </span>
+            <span class="post-count-area">
+              <span class="number">{{data?.postcount || 0 }}</span>
+              <span class="labels">Posts</span>
+            </span>
+            <!-- <span class="post-count-area">
+            <span class="number">45</span>
+            <span class="labels">  Profile views</span>
+          </span> -->
+        </div>
+
+        <!-- <div class="post-time-box">
+        <p class="margin-remove mat-body-2 ws-mat-primary-text">Last online 4 minutes ago</p>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<ng-container>
+  <div class="recent-tabs">
+    <div class="tabs-content">
+      <div class="tabs-filter">
                     <a href="javascript:void(0)" role="button" class="filter-option df-filter-option" [ngClass]="{'tabs-active' : currentFilter === 'timestamp',
                               ' font-medium':currentFilter !== 'timestamp'}" (click)="filter('timestamp');logTelemetry($event)" id="recent-post">
-            Recent posts </a>
+        Recent posts </a>
                     <a href="javascript:void(0)" role="button" class="filter-option df-filter-option" [ngClass]="{'tabs-active' : currentFilter === 'best',
                               ' font-medium':currentFilter !== 'best'}" (click)="filter('best');logTelemetry($event)" id="best-post">
-            Best posts </a>
+        Best posts </a>
                     <a href="javascript:void(0)" role="button" class="filter-option df-filter-option" [ngClass]="{'tabs-active' : currentFilter === 'saved',
                                           ' font-medium':currentFilter !== 'saved'}" (click)="filter('saved');logTelemetry($event)" id="saved-post">
-            Saved posts </a>
+        Saved posts </a>
                     <!-- <a href="javascript:void(0)" role="button" class="filter-option df-filter-option" [ngClass]="{'-active' : currentFilter === 'watched',
                                             ' font-medium':currentFilter !== 'watched'}" mat-button
-            (click)="filter('watched')">
-            Watched </a> -->
+        (click)="filter('watched')">
+      Watched </a> -->
                     <a href="javascript:void(0)" role="button" class="filter-option df-filter-option" [ngClass]="{'tabs-active' : currentFilter === 'upvoted',
                                               ' font-medium':currentFilter !== 'upvoted'}" (click)="filter('upvoted');logTelemetry($event)" id="upvoted-post">
-            Upvoted </a>
+      Upvoted </a>
                     <a href="javascript:void(0)" role="button" class="filter-option df-filter-option" [ngClass]="{'tabs-active' : currentFilter === 'downvoted',
                                                 ' font-medium':currentFilter !== 'downvoted'}" (click)="filter('downvoted');logTelemetry($event)" id="downvoted-post">
-            Downvoted </a>
-                </div>
-            </div>
-        </div>
-    </ng-container>
-    <div *ngIf="discussionList && discussionList.length > 0" class="margin-top-l">
-        <ng-container *ngFor="let data of discussionList">
-            <div (click)="navigateToDiscussionDetails(data);logTelemetry($event)" id="discuss-card" class="margin-top-l">
-                <lib-discuss-card [discussionData]="data"></lib-discuss-card>
-            </div>
-        </ng-container>
+      Downvoted </a>
     </div>
-    <ng-container *ngIf="!(discussionList && discussionList.length > 0)">
-        <div class="discuss-card-content cursor-pointer">
-            <div class="no-data-label">No Data</div>
-            <div>
-                <span>&nbsp;</span>
-            </div>
-        </div>
-    </ng-container>
+  </div>
+</div>
+</ng-container>
+@if (discussionList && discussionList.length > 0) {
+  <div class="margin-top-l">
+    @for (data of discussionList; track data) {
+      <div (click)="navigateToDiscussionDetails(data);logTelemetry($event)" id="discuss-card" class="margin-top-l">
+        <lib-discuss-card [discussionData]="data"></lib-discuss-card>
+      </div>
+    }
+  </div>
+}
+@if (!(discussionList && discussionList.length > 0)) {
+  <div class="discuss-card-content cursor-pointer">
+    <div class="no-data-label">No Data</div>
+    <div>
+      <span>&nbsp;</span>
+    </div>
+  </div>
+}
 </div>

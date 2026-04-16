@@ -16,20 +16,20 @@ interface ITelemetryObj {
 })
 export class TelemetryUtilsService {
 
-  _context = []
-  currentObj = {};
+  _context: any = []
+  currentObj: any = {};
 
   constructor(
     private discussionEvents: DiscussionEventsService,
     private router: Router
   ) { }
 
-  setContext(context) {
+  setContext(context: any) {
     this._context = context;
     this.currentObj = _.last(context);
   }
 
-  uppendContext(data) {
+  uppendContext(data: any) {
     const matchedC = _.find(this._context, { id: data.id });
     if (!_.isEmpty(data) && !_.isEqual(data, matchedC)) {
       this._context.push(data);
@@ -37,7 +37,7 @@ export class TelemetryUtilsService {
     this.currentObj = _.last(this._context);
   }
 
-  deleteContext(prevTopic) {
+  deleteContext(prevTopic: any) {
     const topic = _.find(this._context, prevTopic);
     if (topic) {
       this._context = _.reject(this._context, topic);
@@ -48,7 +48,7 @@ export class TelemetryUtilsService {
     return this._context;
   }
 
-  logImpression(pageId) {
+  logImpression(pageId: any) {
     this.discussionEvents.emitTelemetry({});
     const impressionEvent: ITelemetryObj = {
       eid: 'IMPRESSION',
@@ -67,7 +67,7 @@ export class TelemetryUtilsService {
     this.discussionEvents.emitTelemetry(impressionEvent);
   }
 
-  logInteract(event, pageId) {
+  logInteract(event: any, pageId: any) {
     const target = _.get(event, 'currentTarget.attributes.id') ||  _.get(event, 'target.attributes.id') ||
      _.get(event, 'srcElement.attributes.id');
     const interactEvent: ITelemetryObj = {
@@ -79,21 +79,25 @@ export class TelemetryUtilsService {
       }
     };
 
-    if (this.currentObj && _.get(this.currentObj, 'id')) {
-      const object = {
-        id: _.get(this.currentObj, 'id').toString(),
-        type: _.get(this.currentObj, 'type'),
+   if (this.currentObj?.id) {
+      const id = this.currentObj.id.toString();
+
+      const object:any = {
+        id,
+        type: this.currentObj?.type,
         ver: '1'
       };
-      object['rollup'] = this._context.length > 1 ?  this.getRollUp() : {};
+
+      object['rollup'] = this._context.length > 1 ? this.getRollUp() : {};
+
       interactEvent.context = {
         cdata: [{
-          id: _.get(this.currentObj, 'id').toString(),
-          type: _.get(this.currentObj, 'type')
-        }], object
+          id,
+          type: this.currentObj?.type
+        }],
+        object
       };
     }
-
     this.discussionEvents.emitTelemetry(interactEvent);
   }
 

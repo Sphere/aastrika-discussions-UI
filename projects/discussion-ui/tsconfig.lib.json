@@ -13,11 +13,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "types": [],
-    "lib": [
-      "dom",
-      "es2018"
-    ]
+    "types": []
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": false,

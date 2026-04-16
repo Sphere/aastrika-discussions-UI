@@ -1,24 +1,37 @@
-<div class="banner-container" (swipeleft)="slideTo(currentIndex + 1)" (swiperight)="slideTo(currentIndex - 1)"
-    *ngIf="bannerData.widgetData?.length > 1">
-
-    <div class="banner WidgetInstanceId" *ngFor="let slide of bannerData.widgetData; let i = index" [hidden]="i !== currentIndex">
+@if (bannerData.widgetData?.length > 1) {
+  <div class="banner-container" (swipeleft)="slideTo(currentIndex + 1)" (swiperight)="slideTo(currentIndex - 1)"
+    >
+    @for (slide of bannerData.widgetData; track slide; let i = $index) {
+      <div class="banner WidgetInstanceId" [hidden]="i !== currentIndex">
         <p>{{slide.banners | json}}</p>
         <img i18n-alt alt="Page Banner" [src]="slide.banners" wsUtilsImageResponsive class="banner-image" />
-    </div>
+      </div>
+    }
     <div class="banner-meta">
-        <!-- <a [routerLink]=" !isOpenInNewTab ? widgetData[currentIndex].redirectUrl : './'"
-            class="banner-title text-truncate" *ngIf="widgetData[currentIndex].title"
-            [title]="widgetData[currentIndex].title">
-            {{ widgetData[currentIndex].title }}
-        </a> -->
-        <div class="dots-container" *ngIf="bannerData.widgetData?.length > 1">
-            <span class="dot" [ngClass]="{ active: j === currentIndex }" *ngFor="let slide of bannerData.widgetData; let j = index"
-                (click)="slideTo(j)"></span>
-        </div>
-    </div>
-    <a *ngIf="bannerData.widgetData?.length > 1" role="button" class="prev" (click)="slideTo(currentIndex - 1)">&#10094;</a>
-    <a *ngIf="bannerData.widgetData?.length > 1" role="button" class="next" (click)="slideTo(currentIndex + 1)">&#10095;</a>
+      <!-- <a [routerLink]=" !isOpenInNewTab ? widgetData[currentIndex].redirectUrl : './'"
+      class="banner-title text-truncate" *ngIf="widgetData[currentIndex].title"
+      [title]="widgetData[currentIndex].title">
+      {{ widgetData[currentIndex].title }}
+    </a> -->
+    @if (bannerData.widgetData?.length > 1) {
+      <div class="dots-container">
+        @for (slide of bannerData.widgetData; track slide; let j = $index) {
+          <span class="dot" [ngClass]="{ active: j === currentIndex }"
+          (click)="slideTo(j)"></span>
+        }
+      </div>
+    }
+  </div>
+  @if (bannerData.widgetData?.length > 1) {
+    <a role="button" class="prev" (click)="slideTo(currentIndex - 1)">&#10094;</a>
+  }
+  @if (bannerData.widgetData?.length > 1) {
+    <a role="button" class="next" (click)="slideTo(currentIndex + 1)">&#10095;</a>
+  }
 </div>
-<div class="banner-container-solo" *ngIf="bannerData.widgetData?.length == 1">
+}
+@if (bannerData.widgetData?.length == 1) {
+  <div class="banner-container-solo">
     <img i18n-alt alt="Page Banner" [src]="bannerData.widgetData[0].banners.xl" wsUtilsImageResponsive class="banner-image-solo" />
-</div>
+  </div>
+}

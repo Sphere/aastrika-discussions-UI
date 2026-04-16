@@ -1,32 +1,30 @@
 <!-- <div *ngIf="bannerOption && currentRoute == 'all-discussions'" class="container-balanced-banner margin-top-s">
-    <ws-widget-sliders [bannerData]="banner"></ws-widget-sliders>
+<ws-widget-sliders [bannerData]="banner"></ws-widget-sliders>
 </div> -->
 
 
-<ng-container *ngIf="headerOption">
-    <div class="df-back-header">
-        <div class="df-btn-container">
-
-            <!-- /* Back button */ -->
-            <button (click)="goBack()" type="button" class="df-btn df-back-btn">
-                <img src="./assets/discussion-ui/images/back-img.png" alt="back-image">
-                Back
-            </button>
-            <button (click)="close($event)" class="df-btn df-close-btn" id="close-discussion-forum" type="button">
-                Close
-                <img src="./assets/discussion-ui/images/close.png"></button>
-
-        </div>
+@if (headerOption) {
+  <div class="df-back-header">
+    <div class="df-btn-container">
+      <!-- /* Back button */ -->
+      <button (click)="goBack()" type="button" class="df-btn df-back-btn">
+        <img src="./assets/discussion-ui/images/back-img.png" alt="back-image">
+        Back
+      </button>
+      <button (click)="close($event)" class="df-btn df-close-btn" id="close-discussion-forum" type="button">
+        Close
+        <img src="./assets/discussion-ui/images/close.png"></button>
+      </div>
     </div>
-</ng-container>
+  }
 
-<div class="ui container discussion-forum">
+  <div class="ui container discussion-forum">
     <div class="discussion-forum-content">
-        <div class="discuss-left-panel">
-            <lib-side-pannel></lib-side-pannel>
-        </div>
-        <div class="discuss-right-panel">
-            <router-outlet></router-outlet>
-        </div>
+      <div class="discuss-left-panel">
+        <lib-side-pannel></lib-side-pannel>
+      </div>
+      <div class="discuss-right-panel">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-</div>
+  </div>

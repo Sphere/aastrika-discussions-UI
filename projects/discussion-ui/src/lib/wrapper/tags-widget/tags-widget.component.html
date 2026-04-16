@@ -1,6 +1,8 @@
 <div >
-    <lib-discuss-tags *ngIf='state === tags'></lib-discuss-tags>
-    <!-- <lib-tag-all-discussion *ngIf='state === tagsAll' [tagName]='tagName'></lib-tag-all-discussion> -->
-    <!-- <lib-discuss-home *ngIf='state === homePage'></lib-discuss-home>
-    <lib-discussion-details *ngIf='state === detailsPage' [topicId]='tid' [slug]='slug'></lib-discussion-details> -->
+  @if (state === tags) {
+    <lib-discuss-tags></lib-discuss-tags>
+  }
+  <!-- <lib-tag-all-discussion *ngIf='state === tagsAll' [tagName]='tagName'></lib-tag-all-discussion> -->
+  <!-- <lib-discuss-home *ngIf='state === homePage'></lib-discuss-home>
+  <lib-discussion-details *ngIf='state === detailsPage' [topicId]='tid' [slug]='slug'></lib-discussion-details> -->
 </div>

@@ -2,64 +2,66 @@
 
 
 <!-- <div class="flex flex-1 cursor-pointer margin-fix height-48"  id="start-discussion">
-    <a href="javascript:void(0)" class="flex flex-1 cursor-pointer margin-fix height-48" i18n-aria-label role="link">
-        <div class="flex flex-1 items-center border discuss border-solid discuss-border ws-mat-primary-background-op100 ">
-           
-            <div class="discuss-home text-white flex items-center justify-center cursor-pointer mat-subheading-2">
-                Start discussion
-            </div>
-        </div>
-       
-    </a>
+<a href="javascript:void(0)" class="flex flex-1 cursor-pointer margin-fix height-48" i18n-aria-label role="link">
+  <div class="flex flex-1 items-center border discuss border-solid discuss-border ws-mat-primary-background-op100 ">
+
+    <div class="discuss-home text-white flex items-center justify-center cursor-pointer mat-subheading-2">
+      Start discussion
+    </div>
+  </div>
+
+</a>
 </div> -->
 
 
 <div class="main-div">
-    <div class="flex flex-1 tag_header_box">
-        <!-- <h2 class="margin-remove-bottom tagtitle" [ngStyle]="getBgColor(tagName)">{{tagName}}</h2> -->
-        <h2 class="margin-remove-bottom mat-h2">{{tagName}}</h2>
-    </div>
-    <div>
-        <span>&nbsp;</span>
-    </div>
+  <div class="flex flex-1 tag_header_box">
+    <!-- <h2 class="margin-remove-bottom tagtitle" [ngStyle]="getBgColor(tagName)">{{tagName}}</h2> -->
+    <h2 class="margin-remove-bottom mat-h2">{{tagName}}</h2>
+  </div>
+  <div>
+    <span>&nbsp;</span>
+  </div>
 
-    <!-- <ng-container>
-        <div class="flex flex-1 flex-row margin-fix tab_margin align-content-between">
-            <div class="flex flex-1 filter max-height-60">
+  <!-- <ng-container>
+  <div class="flex flex-1 flex-row margin-fix tab_margin align-content-between">
+    <div class="flex flex-1 filter max-height-60">
                 <a href="javascript:void(0)" class="filter-option" [ngClass]="{'tabs-active' : currentFilter === 'recent',
     ' font-medium':currentFilter !== 'recent'}" mat-button (click)="filter('recent')" role="button">Recent</a>
                 <a href="javascript:void(0)" class="filter-option" [ngClass]="{'tabs-active' : currentFilter === 'popular',
     ' font-medium':currentFilter !== 'popular'}" mat-button (click)="filter('popular')" role="button">Popular</a>
-               
-            </div>
-           
-            <div>
-                <button class="df-btn df-start-btn mat-subheading-2 ng-star-inserted" id="start-discussion">Start Discussion</button>
-            </div>
-        </div>
-        
-    </ng-container> -->
-    <div class="flex flex-1 custom margin-top-l">
-        <div class="flex flex-1 flex-column margin-fix">
-            <!-- <lib-app-loader *ngIf="fetchSingleCategoryLoader"></lib-app-loader> -->
 
-            <ng-container *ngIf="similarPosts && similarPosts.length > 0">
-                <div (click)="navigateToDiscussionDetails(data);logTelemetry($event)"
-                    *ngFor="let data of similarPosts" id="discuss-card">
-                    <lib-discuss-card [discussionData]="data"></lib-discuss-card>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="!(similarPosts && similarPosts.length > 0)">
-                <div class="discuss-card-content cursor-pointer">
-                    <div class="no-data-label">No Data</div>
-                    <div>
-                        <span>&nbsp;</span>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
     </div>
-    <!-- <div class="flex flex-1 flex-column margin-top-xl margin-bottom-xl pagination-container">
-        <ws-app-pagination [pager]="pager" (changePage)="navigateWithPage($event)"></ws-app-pagination>
-    </div> -->
+
+    <div>
+      <button class="df-btn df-start-btn mat-subheading-2 ng-star-inserted" id="start-discussion">Start Discussion</button>
+    </div>
+  </div>
+
+</ng-container> -->
+<div class="flex flex-1 custom margin-top-l">
+  <div class="flex flex-1 flex-column margin-fix">
+    <!-- <lib-app-loader *ngIf="fetchSingleCategoryLoader"></lib-app-loader> -->
+
+    @if (similarPosts && similarPosts.length > 0) {
+      @for (data of similarPosts; track data) {
+        <div (click)="navigateToDiscussionDetails(data);logTelemetry($event)"
+          id="discuss-card">
+          <lib-discuss-card [discussionData]="data"></lib-discuss-card>
+        </div>
+      }
+    }
+    @if (!(similarPosts && similarPosts.length > 0)) {
+      <div class="discuss-card-content cursor-pointer">
+        <div class="no-data-label">No Data</div>
+        <div>
+          <span>&nbsp;</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+<!-- <div class="flex flex-1 flex-column margin-top-xl margin-bottom-xl pagination-container">
+<ws-app-pagination [pager]="pager" (changePage)="navigateWithPage($event)"></ws-app-pagination>
+</div> -->
 </div>

@@ -26,7 +26,7 @@ export class SidePannelComponent implements OnInit, OnDestroy {
 
   defaultPage = 'categories';
 
-  data: IdiscussionConfig;
+  data!: IdiscussionConfig;
   hideSidePanel: boolean;
   menu: Array<IMenuOptions> = [];
   selectedTab: string;

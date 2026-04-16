@@ -1,22 +1,28 @@
-<ul class="sb-sidebar-menu pl-0" *ngIf="!hideSidePanel">
+@if (!hideSidePanel) {
+  <ul class="sb-sidebar-menu pl-0">
     <!-- <li class="df-sidebar-menu-list" *ngIf="false" (click)="navigate('home', $event)" id="all-discussions"><a>All discussions</a></li> -->
-    <li *ngFor='let d of menu' class="df-sidebar-menu-list" [ngClass]="{'menu-active': isActive(d.route)}" (click)="navigate(d.route, $event)" id="d.route"><a>{{d.label}}</a></li>
+    @for (d of menu; track d) {
+      <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': isActive(d.route)}" (click)="navigate(d.route, $event)" id="d.route"><a>{{d?.label}}</a></li>
+    }
     <!-- <li class="df-sidebar-menu-list" id="leader-board"><a>Leaderboard</a></li> -->
-</ul>
+  </ul>
+}
 
 <!-- for mobile-view -->
 <button type="button" class="openbtn" (click)="showMenuButton()">☰</button>
-<div class="overlay-sidebar" *ngIf="!showSideMenu">
+@if (!showSideMenu) {
+  <div class="overlay-sidebar">
     <div class="overlay-sidebar__menu">
-        <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-        <div class="sidebar-menu__content">
-            <ul class="sb-sidebar-menu-mob pl-0">
-                <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'all-discussions'}" (click)="navigate('home', $event)" id="all-discussions"><a>All discussions</a></li>
-                <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'categories'}" (click)="navigate('categories', $event)" id="discussion-categories"><a>Categories</a></li>
-                <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'tags'}" (click)="navigate('tags', $event)" id="discussion-tags"><a>Tags</a></li>
-                <!-- <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'leaderboard'}" (click)="navigate('leaderboard', $event)" id="leader-board"><a>Leaderboard</a></li> -->
-                <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'my-discussion'}" (click)="navigate('my-discussion', $event)" id="my-discussion"><a>My discussions</a></li>
-            </ul>
-        </div>
+      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+      <div class="sidebar-menu__content">
+        <ul class="sb-sidebar-menu-mob pl-0">
+          <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'all-discussions'}" (click)="navigate('home', $event)" id="all-discussions"><a>All discussions</a></li>
+          <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'categories'}" (click)="navigate('categories', $event)" id="discussion-categories"><a>Categories</a></li>
+          <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'tags'}" (click)="navigate('tags', $event)" id="discussion-tags"><a>Tags</a></li>
+          <!-- <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'leaderboard'}" (click)="navigate('leaderboard', $event)" id="leader-board"><a>Leaderboard</a></li> -->
+          <li class="df-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'my-discussion'}" (click)="navigate('my-discussion', $event)" id="my-discussion"><a>My discussions</a></li>
+        </ul>
+      </div>
     </div>
-</div>
+  </div>
+}

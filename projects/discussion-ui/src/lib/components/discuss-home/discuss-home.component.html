@@ -1,46 +1,52 @@
 <div class="category_inner_box flex flex-row">
-    <div class="flex flex-3 flex-column category_main_box">
+  <div class="flex flex-3 flex-column category_main_box">
 
 
-        <div class="flex flex-1 flex-row margin-bottom-l border category_title_div justify-between">
-            <div class="flex">
-                <div class="main_title_box flex flex-row">
-                    <img src="./assets/discussion-ui/images/Buffer-512.svg" alt="Buffer-image" class="margin-right-m category_img">
-                    <h2 class="cursor-pointer f-medium" [innerHTML]="title"></h2>
-                </div>
-
-            </div>
-            <div class="start_discussion_box">
-                <button *ngIf="isTopicCreator" (click)="startDiscussion();logTelemetry($event)" class="df-btn df-start-btn mat-subheading-2" data-toggle="modal" data-target="#myModal" id="start-discussion">Start Discussion</button>
-            </div>
-
+    <div class="flex flex-1 flex-row margin-bottom-l border category_title_div justify-between">
+      <div class="flex">
+        <div class="main_title_box flex flex-row">
+          <img src="./assets/discussion-ui/images/Buffer-512.svg" alt="Buffer-image" class="margin-right-m category_img">
+          <h2 class="cursor-pointer f-medium" [innerHTML]="title"></h2>
         </div>
 
-
-        <ng-container *ngIf="discussionList && discussionList.length > 0">
-            <div (click)="navigateToDiscussionDetails(discussionData);logTelemetry($event)" infinite-scroll [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollDistance]="modalScrollDistance" [infiniteScrollThrottle]="modalScrollThrottle" [scrollWindow]="true"
-                (scrolled)="onModalScrollDown()" class="" *ngFor="let discussionData of discussionList" id="topic-card">
-                <lib-discuss-card [discussionData]="discussionData"></lib-discuss-card>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="!(discussionList && discussionList.length > 0)">
-            <div class="discuss-card-content cursor-pointer" id="topic-card">
-                <div class="no-data-label">No Data</div>
-                <div>
-                    <span>&nbsp;</span>
-                </div>
-            </div>
-        </ng-container>
-        <!-- <lib-app-loader *ngIf="showLoader"></lib-app-loader> -->
-        <lib-discuss-start [categoryId]="categoryId" (close)="closeModal($event)" *ngIf="showStartDiscussionModal">
-        </lib-discuss-start>
-
+      </div>
+      <div class="start_discussion_box">
+        @if (isTopicCreator) {
+          <button (click)="startDiscussion();logTelemetry($event)" class="df-btn df-start-btn mat-subheading-2" data-toggle="modal" data-target="#myModal" id="start-discussion">Start Discussion</button>
+        }
+      </div>
 
     </div>
 
-    <div class="flex flex-1 right_tag_box margin-left-xl">
-        <lib-discuss-trending-tags [tags]="trendingTags"></lib-discuss-trending-tags>
-    </div>
+
+    @if (discussionList && discussionList.length > 0) {
+      @for (discussionData of discussionList; track discussionData) {
+        <div (click)="navigateToDiscussionDetails(discussionData);logTelemetry($event)" infinite-scroll [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollDistance]="modalScrollDistance" [infiniteScrollThrottle]="modalScrollThrottle" [scrollWindow]="true"
+          (scrolled)="onModalScrollDown()" class="" id="topic-card">
+          <lib-discuss-card [discussionData]="discussionData"></lib-discuss-card>
+        </div>
+      }
+    }
+
+    @if (!(discussionList && discussionList.length > 0)) {
+      <div class="discuss-card-content cursor-pointer" id="topic-card">
+        <div class="no-data-label">No Data</div>
+        <div>
+          <span>&nbsp;</span>
+        </div>
+      </div>
+    }
+    <!-- <lib-app-loader *ngIf="showLoader"></lib-app-loader> -->
+    @if (showStartDiscussionModal) {
+      <lib-discuss-start [categoryId]="categoryId" (close)="closeModal($event)">
+      </lib-discuss-start>
+    }
+
+
+  </div>
+
+  <div class="flex flex-1 right_tag_box margin-left-xl">
+    <lib-discuss-trending-tags [tags]="trendingTags"></lib-discuss-trending-tags>
+  </div>
 
 </div>

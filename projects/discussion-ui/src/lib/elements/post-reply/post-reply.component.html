@@ -11,29 +11,32 @@
             formControlName="replyContent"
             [ngModel]="content"
             i18n-placeholder
-          />
-          <ng-container
-          *ngIf="
+            />
+          @if (
             replyForm.controls['replyContent'].invalid &&
             (replyForm.controls['replyContent'].dirty ||
-              replyForm.controls['replyContent'].touched)
-          "
-        >
-          <!-- test -->
-          <small
-            class="text-error"
-            *ngIf="replyForm.controls['replyContent'].errors?.minlength"
-            i18n>It should be minimum of 2 characters</small>
-        </ng-container>
+            replyForm.controls['replyContent'].touched)
+            ) {
+            <!-- test -->
+            @if (replyForm.controls['replyContent'].errors?.minlength) {
+              <small
+                class="text-error"
+              i18n>It should be minimum of 2 characters</small>
+            }
+          }
         </form>
-          <div class="updatePostActions mt-3 mb-0">
-            <button class="df-btn df-cancel-btn" *ngIf="showCancel" (click)="onCancelClick()" id="cancel-update-post"
-              type="button" i18n>Cancel</button>
-            <button [ngClass]="{'df-btn-disabled': !isButtonEnabled }" *ngIf="mode === 'edit'" [disabled]="!isButtonEnabled"
-              class="df-btn df-update-btn" (click)="onReplyClick('edit')" id="update-post" type="button" i18n>Done</button>
-          </div>
+        <div class="updatePostActions mt-3 mb-0">
+          @if (showCancel) {
+            <button class="df-btn df-cancel-btn" (click)="onCancelClick()" id="cancel-update-post"
+            type="button" i18n>Cancel</button>
+          }
+          @if (mode === 'edit') {
+            <button [ngClass]="{'df-btn-disabled': !isButtonEnabled }" [disabled]="!isButtonEnabled"
+            class="df-btn df-update-btn" (click)="onReplyClick('edit')" id="update-post" type="button" i18n>Done</button>
+          }
         </div>
       </div>
+    </div>
   </div>
 </div>
 

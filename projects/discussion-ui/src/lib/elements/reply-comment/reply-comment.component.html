@@ -9,61 +9,64 @@
 
   <!-- <div *ngIf="displayState === 'EDIT REPLY' ">
 
-    <div class="repy-title">Edit</div>
-  </div> -->
+  <div class="repy-title">Edit</div>
+</div> -->
 
-  <div class="user_name_div d-flex">
-    <span class="circle-text"
-      ><span class="circle-label">{{
-        replyData?.user?.username | splitInitials
-      }}</span></span
-    >
+<div class="user_name_div d-flex">
+  <span class="circle-text"
+    ><span class="circle-label">{{
+    replyData?.user?.username | splitInitials
+  }}</span></span
+  >
 
-    <div class="post_user_text_box">
-      <span class="discuss-user-label" *ngIf="replyData?.user?.username">{{
+  <div class="post_user_text_box">
+    @if (replyData?.user?.username) {
+      <span class="discuss-user-label">{{
         replyData?.user?.username
       }}</span>
-      <span class="discuss-user-label" *ngIf="!replyData?.user?.username">{{
+    }
+    @if (!replyData?.user?.username) {
+      <span class="discuss-user-label">{{
         "Anonymous"
       }}</span>
-      <span class="timing">{{
-        replyData.lastposttime | pipeRelativeTime
-      }}</span>
-    </div>
+    }
+    <span class="timing">{{
+      replyData.lastposttime | pipeRelativeTime
+    }}</span>
   </div>
+</div>
 
-  <p class="discussion-card-comment" [innerHTML]="replyData?.title"></p>
-  <div class="form-container">
-    <form [formGroup]="replyForm" class="d-flex">
-      <input
-        class="replay-field"
-        placeholder="Join the Conversation"
-        minlength="2"
-        aria-label="Type your message here"
-        formControlName="replyContent"
-        i18n-placeholder
+<p class="discussion-card-comment" [innerHTML]="replyData?.title"></p>
+<div class="form-container">
+  <form [formGroup]="replyForm" class="d-flex">
+    <input
+      class="replay-field"
+      placeholder="Join the Conversation"
+      minlength="2"
+      aria-label="Type your message here"
+      formControlName="replyContent"
+      i18n-placeholder
       />
-      <button
-        class="reply-btn"
-        (click)="onReplyClick('reply')"
-        id="update-post"
-        type="button"
+    <button
+      class="reply-btn"
+      (click)="onReplyClick('reply')"
+      id="update-post"
+      type="button"
       >
-        <img src="./assets/discussion-ui/images/send-icon.png" />
-      </button>
-    </form>
-    <ng-container
-      *ngIf="
-        replyForm.controls['replyContent'].invalid &&
-        (replyForm.controls['replyContent'].dirty ||
-          replyForm.controls['replyContent'].touched)
-      "
-    >
-      <!-- test -->
+      <img src="./assets/discussion-ui/images/send-icon.png" />
+    </button>
+  </form>
+  @if (
+    replyForm.controls['replyContent'].invalid &&
+    (replyForm.controls['replyContent'].dirty ||
+    replyForm.controls['replyContent'].touched)
+    ) {
+    <!-- test -->
+    @if (replyForm.controls['replyContent'].errors?.minlength) {
       <small
         class="text-error"
-        *ngIf="replyForm.controls['replyContent'].errors?.minlength"
-        i18n>It should be minimum of 2 characters</small>
-    </ng-container>
-  </div>
+      i18n>It should be minimum of 2 characters</small>
+    }
+  }
+</div>
 </div>
