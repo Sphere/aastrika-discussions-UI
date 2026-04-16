@@ -1,7 +1,7 @@
 import { PipesModule } from './../pipes/pipes.module';
 import { DiscussionService } from './../services/discussion.service';
 import { ConfigService } from './../services/config.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ElementsModule } from './../elements/elements.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -24,50 +24,44 @@ import { ReplyCommentComponent } from '../elements/reply-comment/reply-comment.c
 
 // import { DiscussionDeleteComponent } from './discussion-delete/discussion-delete.component';
 
-@NgModule({
-  declarations: [
-    SidePannelComponent,
-    DiscussHomeComponent,
-    DiscussCategoryComponent,
-    DiscussTagsComponent,
-    MyDiscussionComponent,
-    DiscussionDetailsComponent,
-    DiscussStartComponent,
-    DiscussAllComponent,
-    TagAllDiscussionComponent,
-    TrendingTagsComponent,
-    LeaderBoardComponent,
-    DiscussModerationComponent,
-    // DiscussionDeleteComponent
-    ReplyCommentComponent,
-  ],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    ElementsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TagInputModule,
-    PipesModule,
-    InfiniteScrollModule,
-  ],
-  exports: [
-    SidePannelComponent,
-    DiscussHomeComponent,
-    DiscussCategoryComponent,
-    DiscussTagsComponent,
-    MyDiscussionComponent,
-    DiscussionDetailsComponent,
-    DiscussStartComponent,
-    // TODO: Add this components
-     DiscussAllComponent,
-    TagAllDiscussionComponent,
-    TrendingTagsComponent,
-    LeaderBoardComponent,
-    ReplyCommentComponent
-  ],
-  providers: [
-    DiscussionService, ConfigService
-  ]
-})
+@NgModule({ declarations: [
+        SidePannelComponent,
+        DiscussHomeComponent,
+        DiscussCategoryComponent,
+        DiscussTagsComponent,
+        MyDiscussionComponent,
+        DiscussionDetailsComponent,
+        DiscussStartComponent,
+        DiscussAllComponent,
+        TagAllDiscussionComponent,
+        TrendingTagsComponent,
+        LeaderBoardComponent,
+        DiscussModerationComponent,
+        // DiscussionDeleteComponent
+        ReplyCommentComponent,
+    ],
+    exports: [
+        SidePannelComponent,
+        DiscussHomeComponent,
+        DiscussCategoryComponent,
+        DiscussTagsComponent,
+        MyDiscussionComponent,
+        DiscussionDetailsComponent,
+        DiscussStartComponent,
+        // TODO: Add this components
+        DiscussAllComponent,
+        TagAllDiscussionComponent,
+        TrendingTagsComponent,
+        LeaderBoardComponent,
+        ReplyCommentComponent
+    ], imports: [CommonModule,
+        ElementsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TagInputModule,
+        PipesModule,
+        InfiniteScrollModule], providers: [
+        DiscussionService, ConfigService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class ComponentsModule { }
