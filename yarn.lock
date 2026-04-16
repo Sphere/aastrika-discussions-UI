@@ -150,7 +150,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^17.3.12", "@angular/common@>=10.1.5", "@angular/common@>=16.0.0 <17.0.0", "@angular/common@17.3.12":
+"@angular/common@^17.3.12", "@angular/common@>=10.1.5", "@angular/common@>=17.0.0 <18.0.0", "@angular/common@17.3.12":
   version "17.3.12"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.3.12.tgz"
   integrity sha512-vabJzvrx76XXFrm1RJZ6o/CyG32piTB/1sfFfKHdlH1QrmArb8It4gyk9oEjZ1IkAD0HvBWlfWmn+T6Vx3pdUw==
@@ -183,7 +183,7 @@
   resolved "https://registry.npmjs.org/@angular/compiler/-/compiler-9.0.0.tgz"
   integrity sha512-ctjwuntPfZZT2mNj2NDIVu51t9cvbhl/16epc5xEwyzyDt76pX9UgwvY+MbXrf/C/FWwdtmNtfP698BKI+9leQ==
 
-"@angular/core@^17.3.12", "@angular/core@>=10.1.5", "@angular/core@>=16.0.0 <17.0.0", "@angular/core@17.3.12":
+"@angular/core@^17.3.12", "@angular/core@>=10.1.5", "@angular/core@>=17.0.0 <18.0.0", "@angular/core@17.3.12":
   version "17.3.12"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.3.12.tgz"
   integrity sha512-MuFt5yKi161JmauUta4Dh0m8ofwoq6Ino+KoOtkYMBGsSx+A7dSm+DUxxNwdj7+DNyg3LjVGCFgBFnq4g8z06A==
@@ -7450,10 +7450,10 @@ ngx-chips@3.0.0:
     ng2-material-dropdown ">=1.0.0"
     tslib "^2.3.0"
 
-ngx-infinite-scroll@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.npmjs.org/ngx-infinite-scroll/-/ngx-infinite-scroll-16.0.0.tgz"
-  integrity sha512-bzyNYd+wVlUUxcopRVr2DAa81eEc8vITtKVvb+c7R1uy8hWPTlxOEXf3L1qA4FMwTEzCQ9b37TXzlJji3qBy+A==
+ngx-infinite-scroll@^17.0.1:
+  version "17.0.1"
+  resolved "https://registry.npmjs.org/ngx-infinite-scroll/-/ngx-infinite-scroll-17.0.1.tgz"
+  integrity sha512-T+XseajbmT9YTMmPnFV/AfSlwjaV9m2gZtbIIZH3S+yg/rvvfbgkThqs54UWIu+pqcqNR4UhrXfw6mUjCVZD2A==
   dependencies:
     tslib "^2.3.0"
 

@@ -24,7 +24,7 @@
     "copyfiles": "^2.4.1",
     "core-js": "^2.5.4",
     "dayjs": "^1.10.4",
-    "ngx-infinite-scroll": "^16.0.0",
+    "ngx-infinite-scroll": "^17.0.1",
     "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.14.10"
