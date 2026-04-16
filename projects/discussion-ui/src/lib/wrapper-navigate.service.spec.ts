@@ -6,7 +6,7 @@ describe('WrapperNavigateService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: WrapperNavigateService = TestBed.get(WrapperNavigateService);
+    const service: WrapperNavigateService = TestBed.inject(WrapperNavigateService);
     expect(service).toBeTruthy();
   });
 });

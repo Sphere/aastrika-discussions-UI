@@ -6,7 +6,7 @@ describe('TelemetryUtilsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TelemetryUtilsService = TestBed.get(TelemetryUtilsService);
+    const service: TelemetryUtilsService = TestBed.inject(TelemetryUtilsService);
     expect(service).toBeTruthy();
   });
 });

@@ -6,7 +6,7 @@ describe('NavigationServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: NavigationServiceService = TestBed.get(NavigationServiceService);
+    const service: NavigationServiceService = TestBed.inject(NavigationServiceService);
     expect(service).toBeTruthy();
   });
 });
