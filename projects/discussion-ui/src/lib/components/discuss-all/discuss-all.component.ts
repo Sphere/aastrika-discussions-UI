@@ -4,14 +4,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DiscussionService } from '../../services/discussion.service';
 import { ConfigService } from '../../services/config.service';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
-/* tslint:disable */
-import * as _ from 'lodash'
 import { NSDiscussData } from '../../models/discuss.model';
 import { Subject, Subscription } from 'rxjs';
-import { NavigationServiceService } from '../../navigation-service.service';
 import { DiscussionUIService } from '../../services/discussion-ui.service';
-import { takeUntil } from 'rxjs/operators'
-// import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { filter, map, takeUntil } from 'rxjs/operators'
+import { get, union, orderBy, flatten } from 'lodash';
 
 /* tslint:enable */
 
@@ -56,14 +53,11 @@ export class DiscussAllComponent implements OnInit {
   public unsubscribe = new Subject<void>();
   constructor(
     public router: Router,
-    private route: ActivatedRoute,
     private discussionService: DiscussionService,
     private configService: ConfigService,
     public activatedRoute: ActivatedRoute,
     private telemetryUtils: TelemetryUtilsService,
-    private navigationService: NavigationServiceService,
     private discussionUIService: DiscussionUIService
-    // private modalService: BsModalService
   ) { }
 
   ngOnInit() {
@@ -145,17 +139,17 @@ export class DiscussAllComponent implements OnInit {
 
   // navigateToDiscussionDetails(discussionData) {
 
-  //   const matchedTopic = _.find(this.telemetryUtils.getContext(), { type: 'Topic' });
+  //   const matchedTopic = find(this.telemetryUtils.getContext(), { type: 'Topic' });
   //   if (matchedTopic) {
   //     this.telemetryUtils.deleteContext(matchedTopic);
   //   }
 
   //   this.telemetryUtils.uppendContext({
-  //     id: _.get(discussionData, 'tid'),
+  //     id: get(discussionData, 'tid'),
   //     type: 'Topic'
   //   });
 
-  //   const slug = _.trim(_.get(discussionData, 'slug'));
+  //   const slug = trim(get(discussionData, 'slug'));
   //   // tslint:disable-next-line: max-line-length
   //   const input = { data: { url: `${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${slug}`, queryParams: {} }, action: CONSTANTS.CATEGORY_DETAILS, }
   //   // console.log("input", input)
@@ -178,9 +172,9 @@ export class DiscussAllComponent implements OnInit {
     // TODO : this.currentActivePage shoulb be dynamic when pagination will be implemented
     this.discussionService.getContextBasedTopic(slug, this.currentActivePage).subscribe(data => {
       this.showLoader = false;
-      this.isTopicCreator = _.get(data, 'privileges.topics:create') === true ? true : false;
-      this.privilegesData = _.get(data, 'privileges');
-      this.discussionList = _.union(_.get(data, 'topics'), _.get(data, 'children'));
+      this.isTopicCreator = get(data, 'privileges.topics:create') === true ? true : false;
+      this.privilegesData = get(data, 'privileges');
+      this.discussionList = union(get(data, 'topics'), get(data, 'children'));
     }, error => {
       this.showLoader = false;
       // TODO: Toaster
@@ -214,12 +208,12 @@ export class DiscussAllComponent implements OnInit {
       //console.log("fillpopulat",response )
       this.showLoader = false;
       this.discussionList = [];
-      _.filter(response.topics, (topic) => {
+      filter(response.topics, (topic) => {
         if (topic.user.uid !== 0 && topic.cid !== 1) {
           this.discussionList.push(topic);
         }
       });
-      // this.discussionList = _.get(response, 'topics')
+      // this.discussionList = get(response, 'topics')
     }, error => {
       this.showLoader = false;
       // TODO: Toaster
@@ -242,7 +236,7 @@ export class DiscussAllComponent implements OnInit {
         //console.log("getRecentData", data)
         this.showLoader = false;
         this.discussionList = [];
-        _.filter(data.topics, (topic) => {
+        filter(data.topics, (topic) => {
           if (topic.user.uid !== 0 && topic.cid !== 1) {
             this.discussionList.push(topic);
           }
@@ -261,24 +255,25 @@ export class DiscussAllComponent implements OnInit {
    }
   }
   getContextData(cid: any) {
-    // this.showLoader = true;
+    this.showLoader = true;
     const req = {
-      // request: {
       cids: cid
-      // }
     };
     return this.discussionService.getContextBasedDiscussion(req).subscribe(
       (data: any) => {
-        //console.log("getContextData", data)
         this.showLoader = false;
-        let result = data.result
-        let res = result.filter((elem) => {
-          return (elem.statusCode !== 404)
-        })
-        this.allTopics = _.map(res, (topic) => topic.topics);
-        this.privilegesData = res[0].privileges
-        //console.log(this.privilegesData)
-        this.discussionList =  _.orderBy(_.flatten(this.allTopics), ['tid'],['desc'])
+        const result = data && data.result ? data.result : [];
+        const res = result.filter((elem: any) => elem.statusCode !== 404);
+        if (res && res.length > 0) {
+          this.privilegesData = res[0].privileges;
+          this.allTopics = res.map((item: any) => item.topics);
+
+          const flatTopics = flatten(this.allTopics);
+          this.discussionList = orderBy(flatTopics, ['tid'], ['desc']);
+        } else {
+          this.discussionList = [];
+          this.privilegesData = null;
+        }
       }, error => {
         this.showLoader = false;
         // TODO: Toaster
@@ -290,7 +285,7 @@ export class DiscussAllComponent implements OnInit {
     // this.showLoader = true;
     this.discussionService.fetchAllTag().subscribe(data => {
       this.showLoader = false;
-      this.trendingTags = _.get(data, 'tags');
+      this.trendingTags = get(data, 'tags');
     }, error => {
       this.showLoader = false;
       // TODO: toaster
@@ -305,7 +300,7 @@ export class DiscussAllComponent implements OnInit {
     // this.showLoader = true;
     this.discussionService.contextBasedTags(req).subscribe(data => {
       this.showLoader = false;
-      this.trendingTags = _.get(data, 'result');
+      this.trendingTags = get(data, 'result');
     }, error => {
       this.showLoader = false;
       // TODO: toaster
@@ -337,14 +332,14 @@ export class DiscussAllComponent implements OnInit {
   }
 
   closeModal(event) {
-    if (_.get(event, 'message') === 'success') {
+    if (get(event, 'message') === 'success') {
       if (this.context) {
         this.getContextBasedDiscussion(this.cIds)
       } else {
         this.refreshData()
       }
-      // this.getDiscussionList(_.get(this.routeParams, 'slug'));
-    } else if (_.get(event, 'message') === 'moderation') {
+      // this.getDiscussionList(get(this.routeParams, 'slug'));
+    } else if (get(event, 'message') === 'moderation') {
       if (this.context) {
         this.getContextBasedDiscussion(this.cIds)
       } else {

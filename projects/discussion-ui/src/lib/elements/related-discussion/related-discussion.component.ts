@@ -1,10 +1,7 @@
 import { Component, Input, OnChanges, OnInit, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import _ from 'lodash-es';
 import { DiscussionService } from '../../services/discussion.service';
-import { ConfigService } from '../../services/config.service';
-import * as CONSTANTS from './../../common/constants.json';
 import { NSDiscussData } from './../../models/discuss.model';
+import { filter } from 'lodash';
 
 @Component({
     selector: 'lib-related-discussion',
@@ -23,8 +20,6 @@ export class RelatedDiscussionComponent implements OnInit, OnChanges {
   similarPosts: any;
 
   constructor(
-    // private router: Router,
-    // private configService: ConfigService,
       private discussionService: DiscussionService,
   ) { }
 
@@ -42,7 +37,7 @@ export class RelatedDiscussionComponent implements OnInit, OnChanges {
     this.discussionService.fetchSingleCategoryDetails(cid).subscribe(
       (data: NSDiscussData.ICategoryData) => {
         this.relatedDiscussions = [];
-        _.filter(data.topics, (topic) => {
+        filter(data.topics, (topic) => {
           if (topic.deleted === 0 && this.topicId !== topic.tid) {
             this.relatedDiscussions.push(topic);
           }
@@ -56,7 +51,7 @@ export class RelatedDiscussionComponent implements OnInit, OnChanges {
       });
   }
 
-  getDiscussion(discuss) {
+  getDiscussion(discuss: any) {
     this.passDiscussData.emit(discuss);
     // this.router.navigate([`${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.DISCUSSION}topic/${discuss.slug}`],
     // { queryParamsHandling: "merge" });

@@ -1,11 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { NSDiscussData } from '../../models/discuss.model';
-/* tslint:disable */
-import _ from 'lodash'
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import * as CONSTANTS from './../../common/constants.json';
 import { NavigationServiceService } from '../../navigation-service.service'
+import { get, maxBy, chain } from 'lodash';
 
 /* tslint:enable */
 @Component({
@@ -30,17 +29,17 @@ export class TrendingTagsComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     // debugger
-    this.max = _.get(_.maxBy(this.tags, 'score'), 'score') || 0;
-    this.trandingTags = _.chain(this.tags).orderBy('score', 'desc').take(5).value();
+    this.max = get(maxBy(this.tags, 'score'), 'score') || 0;
+    this.trandingTags = chain(this.tags).orderBy('score', 'desc').take(5).value();
   }
 
   ngOnChanges(data: SimpleChanges) {
     // debugger
     // this.tableData!.columns = data.tableData.currentValue.columns
-    const tags: any = _.get(data, 'tags.currentValue')
+    const tags: any = get(data, 'tags.currentValue')
     this.tags = tags;
-    this.max = _.get(_.maxBy(this.tags, 'score'), 'score') || 0;
-    this.trandingTags = _.chain(this.tags).orderBy('score', 'desc').take(5).value();
+    this.max = get(maxBy(this.tags, 'score'), 'score') || 0;
+    this.trandingTags = chain(this.tags).orderBy('score', 'desc').take(5).value();
   }
 
   // TODO: To enable trending tags click and navigate to tags detals page

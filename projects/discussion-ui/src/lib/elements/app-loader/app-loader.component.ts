@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-/* tslint:disable */
-import * as _ from 'lodash'
-/* tslint:enable */
+import { get } from 'lodash';
 
 @Component({
     selector: 'lib-app-loader',
@@ -12,9 +9,9 @@ import * as _ from 'lodash'
 })
 export class AppLoaderComponent implements OnInit {
 
-  @Input() data;
-  headerMessage: string;
-  loaderMessage: string;
+  @Input() data: any;
+  headerMessage: string = '';
+  loaderMessage: string = '';
 
   constructor() { }
 
@@ -22,8 +19,8 @@ export class AppLoaderComponent implements OnInit {
     this.headerMessage = 'Please wait';
     this.loaderMessage = 'We are fetching details';
     if (this.data) {
-      this.headerMessage = _.get(this.data, 'headerMessage') || this.headerMessage;
-      this.loaderMessage = _.get(this.data, 'loaderMessage') || this.loaderMessage;
+      this.headerMessage = get(this.data, 'headerMessage') || this.headerMessage;
+      this.loaderMessage = get(this.data, 'loaderMessage') || this.loaderMessage;
     }
 
   }

@@ -1,8 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { isEmpty } from 'lodash';
 import { Subject } from 'rxjs';
-/* tslint:disable */
-import * as _ from 'lodash'
-/* tslint:enable */
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +13,7 @@ export class DiscussionEventsService {
 
   emitTelemetry(event) {
     //console.log('Lib Event', event);
-    if (!_.isEmpty(event)) {
+    if (!isEmpty(event)) {
       this.telemetryEvent.next(event);
     }
   }

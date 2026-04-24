@@ -5,15 +5,12 @@ import { Location } from '@angular/common';
 import { DiscussionEventsService } from './../../discussion-events.service';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { NSDiscussData } from './../../models/discuss.model';
-
-/* tslint:disable */
-import * as _ from 'lodash'
 import { IdiscussionConfig } from '../../models/discussion-config.model';
 import { ConfigService } from '../../services/config.service';
 import { Inject } from '@angular/core';
 import { NavigationServiceService } from '../../navigation-service.service';
 import { AbstractConfigService } from '../../services/abstract-config.service';
-/* tslint:enable */
+import { get } from 'lodash';
 @Component({
     selector: 'lib-lib-entry',
     templateUrl: './lib-entry.component.html',
@@ -60,14 +57,14 @@ export class LibEntryComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       // pagkey is used to read the configuration from the AbstractConfigService
       // since there could be multiple configurations.
-      this.pageKey = _.get(params, 'page')
-      this.config = this.configService.getConfig(_.get(params, 'page'))
+      this.pageKey = get(params, 'page')
+      this.config = this.configService.getConfig(get(params, 'page'))
       //setting the config so that other components can read the data
       this.configSvc.setConfig(JSON.parse(this.config))
       this.data = this.configSvc.getConfig();
-      this.discussionService.userName = _.get(this.data, 'userName');
-      const rawCategories = _.get(this.data, 'categories');
-      this.discussionService.forumIds = _.get(rawCategories, 'result');
+      this.discussionService.userName = get(this.data, 'userName');
+      const rawCategories = get(this.data, 'categories');
+      this.discussionService.forumIds = get(rawCategories, 'result');
       this.discussionService.initializeUserDetails(this.data.userName);
       this.headerOption = this.configSvc.getHeaderOption()
       this.bannerOption = this.configSvc.getBannerOption()
@@ -78,7 +75,7 @@ export class LibEntryComponent implements OnInit {
     this.location.back();
   }
 
-  close(event) {
+  close(event: any) {
     const eventAction = {
       action: 'DF_CLOSE'
     };

@@ -1,15 +1,12 @@
-import { CONTEXT_PROPS } from './../../services/discussion.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DiscussionService } from '../../services/discussion.service';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import * as CONSTANTS from './../../common/constants.json';
-/* tslint:disable */
-import * as _ from 'lodash'
 import { NSDiscussData } from '../../models/discuss.model';
 import { ConfigService } from '../../services/config.service';
 import { NavigationServiceService } from '../../navigation-service.service';
-/* tslint:enable */
+import { find, get, trim, union } from 'lodash';
 
 @Component({
     selector: 'lib-discuss-home',
@@ -63,7 +60,7 @@ export class DiscussHomeComponent implements OnInit {
       })
       // this.routeParams = params;
       // this.categoryId = this.discussionService.getContext(CONTEXT_PROPS.cid);
-      // this.getDiscussionList(_.get(this.routeParams, 'slug'));
+      // this.getDiscussionList(get(this.routeParams, 'slug'));
     });
 
     this.fetchAllTags();
@@ -72,17 +69,17 @@ export class DiscussHomeComponent implements OnInit {
   }
 
   navigateToDiscussionDetails(discussionData) {
-    const matchedTopic = _.find(this.telemetryUtils.getContext(), { type: 'Topic' });
+    const matchedTopic = find(this.telemetryUtils.getContext(), { type: 'Topic' });
     if (matchedTopic) {
       this.telemetryUtils.deleteContext(matchedTopic);
     }
 
     this.telemetryUtils.uppendContext({
-      id: _.get(discussionData, 'tid'),
+      id: get(discussionData, 'tid'),
       type: 'Topic'
     });
     let routerSlug = this.configService.getConfig().routerSlug ? this.configService.getConfig().routerSlug : ''
-    let input = { data: { url: `${routerSlug}${CONSTANTS.ROUTES.TOPIC}${_.trim(_.get(discussionData, 'slug'))}`, queryParams: {}, tid: discussionData.tid, title: discussionData.title }, action: CONSTANTS.CATEGORY_DETAILS }
+    let input = { data: { url: `${routerSlug}${CONSTANTS.ROUTES.TOPIC}${trim(get(discussionData, 'slug'))}`, queryParams: {}, tid: discussionData.tid, title: discussionData.title }, action: CONSTANTS.CATEGORY_DETAILS }
     this.navigationService.navigate(input)
     this.stateChange.emit({ tid: discussionData.tid, title: discussionData.title, action: this.categoryHomeAction })
   }
@@ -97,13 +94,13 @@ export class DiscussHomeComponent implements OnInit {
     this.discussionService.getContextBasedTopic(slug, this.currentActivePage).subscribe(data => {
    
       this.showLoader = false;
-      this.title = _.get(data, 'title')
-      this.isTopicCreator = _.get(data, 'privileges.topics:create') === true ? true : false;
-      this.discussionList = [...this.discussionList, ...(_.union(_.get(data, 'topics'), _.get(data, 'children')))];
+      this.title = get(data, 'title')
+      this.isTopicCreator = get(data, 'privileges.topics:create') === true ? true : false;
+      this.discussionList = [...this.discussionList, ...(union(get(data, 'topics'), get(data, 'children')))];
       if (this.currentPage === 1) {
-      this.pageSize = _.get(data, 'nextStart'); // count of topics per page
+      this.pageSize = get(data, 'nextStart'); // count of topics per page
       }
-      this.totalTopics = _.get(data, 'totalTopicCount'); // total count of topics
+      this.totalTopics = get(data, 'totalTopicCount'); // total count of topics
     }, error => {
       this.showLoader = false;
       // TODO: Toaster
@@ -120,7 +117,7 @@ export class DiscussHomeComponent implements OnInit {
   }
 
   closeModal(event) {
-    if (_.get(event, 'message') === 'success') {
+    if (get(event, 'message') === 'success') {
       this.discussionList = [];
       this.currentPage = 0;
       this.getDiscussionList(this.routeParams);
@@ -132,7 +129,7 @@ export class DiscussHomeComponent implements OnInit {
     this.showLoader = true;
     this.discussionService.fetchAllTag().subscribe(data => {
       this.showLoader = false;
-      this.trendingTags = _.get(data, 'tags');
+      this.trendingTags = get(data, 'tags');
     }, error => {
       this.showLoader = false;
       // TODO: toaster
@@ -147,7 +144,7 @@ export class DiscussHomeComponent implements OnInit {
   onModalScrollDown() {
     const pageId = this.currentPage - 1;
     if ( (this.pageSize * pageId) < this.totalTopics) {  // should fail when it reaches the total topics
-    this.getDiscussionList(_.get(this.routeParams, 'slug'));
+    this.getDiscussionList(get(this.routeParams, 'slug'));
     }
   }
 }

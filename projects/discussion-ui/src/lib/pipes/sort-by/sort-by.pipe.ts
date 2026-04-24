@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-/* tslint:disable */
-import { orderBy } from 'lodash-es';
-/* tslint:enable */
+import { orderBy } from 'lodash';
 
 @Pipe({
     name: 'sortBy',
@@ -10,7 +8,7 @@ import { orderBy } from 'lodash-es';
 export class SortByPipe implements PipeTransform {
 
   transform(data: any[], sortField: string, sortOrder: string): any[] {
-    if (!data || !data.length || sortOrder === '' || !sortOrder) { return data; }
+    if (!data || !data.length || !sortOrder) { return data; }
     if (!sortField || sortField === '') {
       data = data.map(e => e.trim());
       if (sortOrder === 'asc') {
@@ -20,9 +18,15 @@ export class SortByPipe implements PipeTransform {
       }
     }
     data.forEach((obj) => {
-      obj[sortField] = obj[sortField].trim();
+      if (obj[sortField] && typeof obj[sortField] === 'string') {
+        obj[sortField] = obj[sortField].trim();
+      }
     });
-    return orderBy(data, [sortField], [sortOrder]);
+    return orderBy(
+      data, 
+      [sortField], 
+      [sortOrder as 'asc' | 'desc']
+    );
   }
 
 }

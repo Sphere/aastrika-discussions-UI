@@ -18,8 +18,7 @@
     "@angular/common": "^21.2.9",
     "@angular/core": "^21.2.9",
     "@project-sunbird/client-services": "^3.9.5",
-    "lodash-es": "^4.17.20",
-    "ngx-chips": "3.0.0",
+    "lodash": "^4.17.20",
     "ngx-infinite-scroll": "^21.0.0"
   },
   "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.",

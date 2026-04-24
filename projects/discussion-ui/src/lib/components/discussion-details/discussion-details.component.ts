@@ -5,14 +5,12 @@ import { Component, OnInit, OnDestroy, Input, Renderer2, Output, EventEmitter } 
 import { NSDiscussData } from './../../models/discuss.model';
 import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import * as CONSTANTS from '../../common/constants.json';
-/* tslint:disable */
-import * as _ from 'lodash'
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../../services/config.service';
-/* tslint:enable */
 import { Location } from '@angular/common';
 
 import { NavigationServiceService } from '../../navigation-service.service';
+import { get, find, trim } from 'lodash';
 
 const MSGS = {
   deletePost: `Are you sure you want to delete this Post? This can't be undone.`,
@@ -85,8 +83,8 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     if (!this.topicId && !this.slug) {
       this.route.params.subscribe(params => {
         this.routeParams = params;
-        this.slug = _.get(this.routeParams, 'slug');
-        this.topicId = _.get(this.routeParams, 'topicId');
+        this.slug = get(this.routeParams, 'slug');
+        this.topicId = get(this.routeParams, 'topicId');
         this.refreshPostData(this.currentActivePage);
         // this.getRealtedDiscussion(this.cid)
       });
@@ -104,8 +102,8 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     if (!this.topicId && !this.slug) {
       this.route.params.subscribe(params => {
         this.routeParams = params;
-        this.slug = _.get(this.routeParams, 'slug');
-        this.topicId = _.get(this.routeParams, 'topicId');
+        this.slug = get(this.routeParams, 'slug');
+        this.topicId = get(this.routeParams, 'topicId');
         this.refreshPostData(this.currentActivePage);
         // this.getRealtedDiscussion(this.cid)
       });
@@ -120,17 +118,17 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   // new method
   acceptData(discuss: any) {
     // debugger
-    const matchedTopic = _.find(this.telemetryUtils.getContext(), { type: 'Topic' });
+    const matchedTopic = find(this.telemetryUtils.getContext(), { type: 'Topic' });
     if (matchedTopic) {
       this.telemetryUtils.deleteContext(matchedTopic);
     }
 
     this.telemetryUtils.uppendContext({
-      id: _.get(discuss, 'tid'),
+      id: get(discuss, 'tid'),
       type: 'Topic'
     });
 
-    const slug = _.trim(_.get(discuss, 'slug'))
+    const slug = trim(get(discuss, 'slug'))
     const input = {
       data: { url: `${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${slug}`, queryParams: {} },
       action: CONSTANTS.CATEGORY_DETAILS };
@@ -176,10 +174,10 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
 
   appendResponse(data: any) {
     this.data = data;
-    this.paginationData = _.get(data, 'pagination');
-    this.mainUid = _.get(data, 'loggedInUser.uid');
-    this.categoryId = _.get(data, 'cid');
-    this.topicId = _.get(data, 'tid');
+    this.paginationData = get(data, 'pagination');
+    this.mainUid = get(data, 'loggedInUser.uid');
+    this.categoryId = get(data, 'cid');
+    this.topicId = get(data, 'tid');
   }
 
 
@@ -346,8 +344,8 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   }
 
   logTelemetry(event: any, data?: any) {
-    const pid = _.get(data, 'pid') || _.get(data, 'mainPid') ?
-      { id: _.get(data, 'pid') || _.get(data, 'mainPid'), type: 'Post' } : {};
+    const pid = get(data, 'pid') || get(data, 'mainPid') ?
+      { id: get(data, 'pid') || get(data, 'mainPid'), type: 'Post' } : {};
     this.telemetryUtils.uppendContext(pid);
     this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.DETAILS);
   }
@@ -363,7 +361,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   getRealtimePost(post: any, index: any) {
     this.editMode = true;
     this.editContentIndex = index;
-    this.contentPost = _.get(post, 'content').replace(/<[^>]*>/g, '');
+    this.contentPost = get(post, 'content').replace(/<[^>]*>/g, '');
     post.toggle = false;
   }
 
@@ -395,32 +393,32 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editReplyHandler(event, post) {
-    if (_.get(event, 'action') === 'cancel') {
+  editReplyHandler(event: any, post: any) {
+    if (get(event, 'action') === 'cancel') {
       this.onEditMode(false);
-    } else if (_.get(event, 'action') === 'edit') {
-      this.updatePost(_.get(event, 'content'), _.get(post, 'pid'));
+    } else if (get(event, 'action') === 'edit') {
+      this.updatePost(get(event, 'content'), get(post, 'pid'));
       this.logTelemetry(event, post);
     }
   }
 
-  commentReplyHandler(event, post) {
-    if (_.get(event, 'action') === 'cancel') {
+  commentReplyHandler(event: any, post: any) {
+    if (get(event, 'action') === 'cancel') {
       this.togglePost(post);
-    } else if (_.get(event, 'action') === 'reply') {
-      this.postCommentsReply(_.get(event, 'content'), post);
+    } else if (get(event, 'action') === 'reply') {
+      this.postCommentsReply(get(event, 'content'), post);
       this.logTelemetry(event, post);
     }
   }
 
-  postReplyHandler(event, post) {
-    if (_.get(event, 'action') === 'reply') {
-      this.postReply(_.get(event, 'content'), post);
+  postReplyHandler(event: any, post: any) {
+    if (get(event, 'action') === 'reply') {
+      this.postReply(get(event, 'content'), post);
       this.logTelemetry(event, post);
     }
   }
 
-  togglePost(post) {
+  togglePost(post: any) {
     post.toggle = !post.toggle;
     this.onEditMode(false);
   }
@@ -430,8 +428,8 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
    */
   closeModal(event: any) {
     //console.log('close event', event);
-    if (_.get(event, 'action') === 'update') {
-      this.editTopicHandler(event, _.get(event, 'tid'), _.get(event, 'request'));
+    if (get(event, 'action') === 'update') {
+      this.editTopicHandler(event, get(event, 'tid'), get(event, 'request'));
     }
     this.showEditTopicModal = false;
   }
@@ -446,7 +444,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
   /**
    * @description - It will all the update topic api. If success, then will refresh the data.
    */
-  editTopicHandler(event, tid, updateTopicRequest) {
+  editTopicHandler(event: any, tid: any, updateTopicRequest: any) {
     this.logTelemetry(event, this.editableTopicDetails);
     this.discussionService.editPost(tid, updateTopicRequest).subscribe(data => {
       console.log('update success', data);
@@ -460,17 +458,17 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy {
    * @description - It will open the confirmation popup before deleting the topic,
    *                If clicked yes, then will call the delete topic handler.
    */
-  deleteTopic(event, topicData) {
+  deleteTopic(event: any, topicData: any) {
     if (window.confirm(MSGS.deleteTopic)) {
       this.logTelemetry(event, topicData);
-      this.deleteTopicHandler(_.get(topicData, 'tid'));
+      this.deleteTopicHandler(get(topicData, 'tid'));
     }
   }
 
   /**
    * @description - It will all the delete topic api. If success, then will navigate back to the previous page.
    */
-  deleteTopicHandler(topicId) {
+  deleteTopicHandler(topicId: any) {
     this.discussionService.deleteTopic(topicId).subscribe(data => {
       this.location.back();
     }, error => {

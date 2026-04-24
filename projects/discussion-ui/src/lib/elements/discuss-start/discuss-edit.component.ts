@@ -4,10 +4,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NSDiscussData } from '../../models/discuss.model';
 import { TelemetryUtilsService } from '../../telemetry-utils.service';
 import { DiscussUtilsService } from '../../services/discuss-utils.service';
-/* tslint:disable */
-import * as _ from 'lodash'
 import { ConfigService } from '../../services/config.service';
-/* tslint:enable */
+import { map, get } from 'lodash';
 
 @Component({
     selector: 'lib-discuss-edit',
@@ -16,9 +14,9 @@ import { ConfigService } from '../../services/config.service';
     standalone: false
 })
 export class DiscussEditComponent implements OnInit {
-  @Input() categoryId: string;
+  @Input() categoryId: string = '';
   @Input() topicData: any;
-  @Input() mode: string;
+  @Input() mode: string = '';
   @Output() close = new EventEmitter();
 
   startForm!: UntypedFormGroup;
@@ -57,7 +55,7 @@ export class DiscussEditComponent implements OnInit {
     this.initializeFormFields(this.topicData);
   }
 
-  initializeFormFields(topicData) {
+  initializeFormFields(topicData: any) {
     this.startForm = this.formBuilder.group({
       question: ['', [Validators.required , Validators.minLength(8) , Validators.maxLength(200), this.noWhitespaceValidator]],
       description: ['', Validators.required],
@@ -70,13 +68,13 @@ export class DiscussEditComponent implements OnInit {
 
     /** If popup is in edit mode */
     if (topicData) {
-      const tags = _.map(_.get(topicData, 'tags'), (element) => {
-        return _.get(element, 'value');
+      const tags = map(get(topicData, 'tags'), (element) => {
+        return get(element, 'value');
       });
 
       /** calling htmlDecode method to get the parsed string */
-      this.startForm.controls['question'].setValue(this.discussUtils.htmlDecode(_.get(topicData, 'title')));
-      this.startForm.controls['description'].setValue(_.get(topicData, 'posts[0].content').replace(/<[^>]+>/g, ''));
+      this.startForm.controls['question'].setValue(this.discussUtils.htmlDecode(get(topicData, 'title')));
+      this.startForm.controls['description'].setValue(get(topicData, 'posts[0].content').replace(/<[^>]+>/g, ''));
       this.startForm.controls['tags'].setValue(tags);
       this.validateForm();
     }
@@ -126,8 +124,8 @@ export class DiscussEditComponent implements OnInit {
     }
 
     this.discussService.fetchAllTag().subscribe(data => {
-      const tags = _.get(data, 'tags');
-      this.allTags = _.map(tags, (tag) => tag.value);
+      const tags = get(data, 'tags');
+      this.allTags = map(tags, (tag) => tag.value);
     });
   }
   showError(meta: string) {
@@ -187,11 +185,11 @@ export class DiscussEditComponent implements OnInit {
       title: form.value.question,
       content: form.value.description,
       tags: form.value.tags,
-      uid: _.get(this.topicData, 'uid')
+      uid: get(this.topicData, 'uid')
     };
     this.close.emit({
       action: 'update',
-      tid: _.get(this.topicData, 'posts[0].pid'),
+      tid: get(this.topicData, 'posts[0].pid'),
       request: updateTopicRequest
     });
   }
@@ -200,7 +198,7 @@ export class DiscussEditComponent implements OnInit {
     this.close.emit({ message: eventMessage });
   }
 
-  logTelemetry(event) {
+  logTelemetry(event: any) {
     this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.START);
   }
 }

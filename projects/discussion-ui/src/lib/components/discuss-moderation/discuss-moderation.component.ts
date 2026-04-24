@@ -1,7 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-/* tslint:disable */
-import * as _ from 'lodash'
-/* tslint:enable */
 
 @Component({
     selector: 'lib-discuss-moderation',

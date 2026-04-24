@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 import { DiscussionService } from '../../services/discussion.service';
-import * as _ from 'lodash'
 import { NavigationServiceService } from '../../navigation-service.service';
 import * as CONSTANTS from '../../common/constants.json';
 import { EventsService } from '../../events.service';
@@ -32,7 +31,7 @@ export class CategoryWidgetComponent extends BaseWrapperComponent {
     this.state = this.detailsPage;
   }
 
-  stateChange(event) {
+  stateChange(event: any) {
     this.state = event.action
     if (event.action === this.detailsPage) {
       this.tid = event.tid
@@ -40,7 +39,7 @@ export class CategoryWidgetComponent extends BaseWrapperComponent {
     }
   }
 
-  protected wrapperEventListener(data) {
-  }
+  // protected wrapperEventListener(data) {
+  // }
 
 }

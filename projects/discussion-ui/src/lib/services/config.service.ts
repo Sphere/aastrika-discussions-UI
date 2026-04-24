@@ -1,9 +1,8 @@
-import { DiscussionService } from './discussion.service';
 import { Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReplaySubject, Subscription } from 'rxjs';
-import * as _ from 'lodash'
 import { IdiscussionConfig } from '../models/discussion-config.model';
+import { get } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -13,33 +12,32 @@ export class ConfigService implements OnInit {
   paramsSubscription: Subscription;
   private _config: IdiscussionConfig;
   public checkContext: boolean;
-  public queryParams;
+  public queryParams: any;
   getContextData: any;
   hasContextData: any;
   getParams: IdiscussionConfig;
   setCategoryId = new ReplaySubject(1)
-  categoryId: string
+  categoryId: string = ''
 
   constructor(
-    public activatedRoute: ActivatedRoute,
-    private discussionService: DiscussionService,
+    public activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
 
   }
 
-  setConfig(config) {
+  setConfig(config: any) {
     // activatedRoute.data.subscribe((config) => {
     this._config = config;
     // });
   }
 
-  setConfigFromParams(activatedRoute) {
-    activatedRoute.queryParams.subscribe((params) => {
+  setConfigFromParams(activatedRoute: any) {
+    activatedRoute.queryParams.subscribe((params: any) => {
       const obj: IdiscussionConfig = {
-        userName: _.get(params, 'userName'),
-        categories: JSON.parse(_.get(params, 'categories'))
+        userName: get(params, 'userName'),
+        categories: JSON.parse(get(params, 'categories'))
       };
       this._config = obj;
     });
@@ -51,7 +49,7 @@ export class ConfigService implements OnInit {
 
   public getCategories() {
     this.getParams = this.getConfig()
-    return _.get(this.getParams, 'categories')
+    return get(this.getParams, 'categories')
   }
 
   public hasContext() {
@@ -68,7 +66,7 @@ export class ConfigService implements OnInit {
     return this.getContextData
   }
 
-  setCategoryid(id) {
+  setCategoryid(id: any) {
     this.categoryId = id
     this.setCategoryId.next(id)
   }

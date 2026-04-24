@@ -5,12 +5,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as CONSTANTS from './../../common/constants.json';
-
-/* tslint:disable */
-import * as _ from 'lodash'
 import { ConfigService } from '../../services/config.service';
 import { IdiscussionConfig, IMenuOptions } from '../../models/discussion-config.model';
-/* tslint:enable */
+import { get } from 'lodash';
 
 @Component({
     selector: 'lib-side-pannel',
@@ -46,7 +43,7 @@ export class SidePannelComponent implements OnInit, OnDestroy {
     this.hideSidePanel = document.body.classList.contains('widget');
     this.telemetryUtils.logImpression(NSDiscussData.IPageName.HOME);
     this.data = this.configService.getConfig();
-    const menuArr = _.get(this.data, 'menuOptions') && _.get(this.data, 'menuOptions').length > 0
+    const menuArr = get(this.data, 'menuOptions') && get(this.data, 'menuOptions').length > 0
       ? this.data.menuOptions : CONSTANTS.MENUOPTIONS;
     // })
     for (let i = 0; i < menuArr.length; i++) {

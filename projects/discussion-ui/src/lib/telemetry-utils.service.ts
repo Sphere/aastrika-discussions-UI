@@ -2,9 +2,7 @@
 import { DiscussionEventsService } from './discussion-events.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-/* tslint:disable */
-import * as _ from 'lodash'
-/* tslint:enable */
+import { last, find, isEmpty, isEqual, reject, get } from 'lodash';
 interface ITelemetryObj {
   eid: string,
   edata: {},
@@ -26,21 +24,21 @@ export class TelemetryUtilsService {
 
   setContext(context: any) {
     this._context = context;
-    this.currentObj = _.last(context);
+    this.currentObj = last(context);
   }
 
   uppendContext(data: any) {
-    const matchedC = _.find(this._context, { id: data.id });
-    if (!_.isEmpty(data) && !_.isEqual(data, matchedC)) {
+    const matchedC = find(this._context, { id: data.id });
+    if (!isEmpty(data) && !isEqual(data, matchedC)) {
       this._context.push(data);
     }
-    this.currentObj = _.last(this._context);
+    this.currentObj = last(this._context);
   }
 
   deleteContext(prevTopic: any) {
-    const topic = _.find(this._context, prevTopic);
+    const topic = find(this._context, prevTopic);
     if (topic) {
-      this._context = _.reject(this._context, topic);
+      this._context = reject(this._context, topic);
     }
   }
 
@@ -60,20 +58,20 @@ export class TelemetryUtilsService {
     }
     if (this.currentObj) {
       impressionEvent.context = { cdata: [{
-        id: _.get(this.currentObj, 'id'),
-        type: _.get(this.currentObj, 'type') }
+        id: get(this.currentObj, 'id'),
+        type: get(this.currentObj, 'type') }
       ]};
     }
     this.discussionEvents.emitTelemetry(impressionEvent);
   }
 
   logInteract(event: any, pageId: any) {
-    const target = _.get(event, 'currentTarget.attributes.id') ||  _.get(event, 'target.attributes.id') ||
-     _.get(event, 'srcElement.attributes.id');
+    const target = get(event, 'currentTarget.attributes.id') ||  get(event, 'target.attributes.id') ||
+     get(event, 'srcElement.attributes.id');
     const interactEvent: ITelemetryObj = {
       eid: 'INTERACT',
       edata: {
-        id: _.get(target, 'value') || _.get(event, 'action'),
+        id: get(target, 'value') || get(event, 'action'),
         type: 'CLICK',
         pageid: pageId
       }
@@ -104,7 +102,7 @@ export class TelemetryUtilsService {
   getRollUp() {
 
       const rollUp = {};
-      const data = _.reject(this._context, this.currentObj);
+      const data = reject(this._context, this.currentObj);
 
       if (this._context.length > 1) {
         data.forEach((element, index) => {
@@ -113,7 +111,7 @@ export class TelemetryUtilsService {
         });
       }
 
-      if (_.get(this.currentObj, 'type') !== 'Post') {
+      if (get(this.currentObj, 'type') !== 'Post') {
         return rollUp;
       }
 

@@ -89,13 +89,11 @@
       <span class="font-weight-500" i18n>Discard</span>
     </button>
 
-    @if (mode !== 'edit') {
-      <button type="submit" class="df-btn df-submit-btn"
-        [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton && !startForm.hasError('whitespace')"
-        (click)="submitPost(startForm);logTelemetry($event)" id="submit-discussion-start-form">
-        <span class="text-white font-weight-500" i18n>Submit Post</span>
-      </button>
-    }
+    <button type="submit" class="df-btn df-submit-btn"
+      [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton && !startForm.hasError('whitespace')"
+      (click)="submitPost(startForm);logTelemetry($event)" id="submit-discussion-start-form">
+      <span class="text-white font-weight-500" i18n>Submit Post</span>
+    </button>
     @if (mode === 'edit') {
       <button type="submit" class="df-btn df-update-btn"
         [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton && !startForm.hasError('whitespace')"

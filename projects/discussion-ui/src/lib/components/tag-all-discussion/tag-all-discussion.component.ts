@@ -2,14 +2,13 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
 import { Router, ActivatedRoute } from '@angular/router'
 import { DiscussionService } from '../../services/discussion.service';
-/* tslint:disable */
-import _ from 'lodash'
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../../services/config.service';
 import * as CONSTANTS from './../../common/constants.json';
 import { DiscussUtilsService } from '../../services/discuss-utils.service';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { NavigationServiceService } from '../../navigation-service.service';
+import { filter, find, get, trim, map, flatten } from 'lodash';
 
 @Component({
     selector: 'lib-tag-all-discussion',
@@ -83,7 +82,7 @@ export class TagAllDiscussionComponent implements OnInit {
     this.discussService.getTagBasedDiscussion(tagname).subscribe(
       (data: NSDiscussData.IDiscussionData) => {
         this.similarPosts = [];
-        _.filter(data.topics, (topic) => {
+        filter(data.topics, (topic) => {
           if (topic.user.uid !== 0) {
             this.similarPosts.push(topic)
           }
@@ -109,9 +108,9 @@ export class TagAllDiscussionComponent implements OnInit {
     };
 
     this.discussService.getContextBasedTagDiscussion(req).subscribe(
-      (data: NSDiscussData.IDiscussionData) => {
+      (data: NSDiscussData.IDiscussionData | any) => {
         this.similarPosts = [];
-        _.filter(data.result, (topic) => {
+        filter(data.result, (topic) => {
           if (topic.user.uid !== 0) {
             this.similarPosts.push(topic)
           }
@@ -135,7 +134,7 @@ export class TagAllDiscussionComponent implements OnInit {
   //     (data: any) => {
   //       this.paginationData = data.pagination
   //       this.setPagination()
-  //       this.similarPosts = _.get(data, 'topics')
+  //       this.similarPosts = get(data, 'topics')
   //     })
   // }
 
@@ -157,27 +156,27 @@ export class TagAllDiscussionComponent implements OnInit {
   }
 
   /** Method to navigate to the dicussion detail page on click of tag related discussion */
-  navigateToDiscussionDetails(discussionData) {
+  navigateToDiscussionDetails(discussionData: any) {
     debugger
-    const matchedTopic = _.find(this.telemetryUtils.getContext(), { type: 'Topic' });
+    const matchedTopic = find(this.telemetryUtils.getContext(), { type: 'Topic' });
     if (matchedTopic) {
       this.telemetryUtils.deleteContext(matchedTopic);
     }
 
     this.telemetryUtils.uppendContext({
-      id: _.get(discussionData, 'tid'),
+      id: get(discussionData, 'tid'),
       type: 'Topic'
     });
 
-    let slug = _.trim(_.get(discussionData, 'slug'))
+    let slug = trim(get(discussionData, 'slug'))
     let input = { data: { url: `${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${slug}`, queryParams: {} }, action: CONSTANTS.CATEGORY_DETAILS, }
     this.navigationService.navigate(input)
     this.stateChange.emit({ action: CONSTANTS.CATEGORY_DETAILS, title: discussionData.title, tid: discussionData.tid })
 
-    // this.router.navigate([`${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${_.trim(_.get(discussionData, 'slug'))}`], { queryParamsHandling: "merge" });
+    // this.router.navigate([`${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${trim(get(discussionData, 'slug'))}`], { queryParamsHandling: "merge" });
   }
 
-  logTelemetry(event) {
+  logTelemetry(event: any) {
     this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.HOME);
   }
 
@@ -204,12 +203,12 @@ export class TagAllDiscussionComponent implements OnInit {
     return this.discussService.fetchPopularD(page).subscribe((response: any) => {
       this.showLoader = false;
       this.discussionList = [];
-      _.filter(response.topics, (topic) => {
+      filter(response.topics, (topic) => {
         if (topic.user.uid !== 0 && topic.cid !== 1 ) {
           this.discussionList.push(topic);
         }
       });
-      // this.discussionList = _.get(response, 'topics')
+      // this.discussionList = get(response, 'topics')
     }, error => {
       this.showLoader = false;
       // TODO: Toaster
@@ -248,7 +247,7 @@ export class TagAllDiscussionComponent implements OnInit {
       (data: any) => {
         this.showLoader = false;
         this.discussionList = [];
-        _.filter(data.topics, (topic) => {
+        filter(data.topics, (topic) => {
           if (topic.user.uid !== 0 && topic.cid !== 1) {
             this.discussionList.push(topic);
           }
@@ -271,11 +270,11 @@ export class TagAllDiscussionComponent implements OnInit {
       (data: any) => {
         this.showLoader = false;
         let result = data.result
-        let res = result.filter((elem) => {
+        let res = result.filter((elem: any) => {
           return (elem.statusCode !== 404)
         })
-        this.allTopics = _.map(res, (topic) => topic.topics);
-        this.discussionList = _.flatten(this.allTopics)
+        this.allTopics = map(res, (topic) => topic.topics);
+        this.discussionList = flatten(this.allTopics)
       }, error => {
         this.showLoader = false;
         // TODO: Toaster

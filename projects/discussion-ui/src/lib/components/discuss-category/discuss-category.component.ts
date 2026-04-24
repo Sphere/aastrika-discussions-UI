@@ -4,13 +4,10 @@ import { DiscussionService, CONTEXT_PROPS } from '../../services/discussion.serv
 import { NSDiscussData } from './../../models/discuss.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
-
 import * as CONSTANTS from './../../common/constants.json';
-/* tslint:disable */
-import * as _ from 'lodash'
 import { ConfigService } from '../../services/config.service';
 import { NavigationServiceService } from '../../navigation-service.service';
-/* tslint:enable */
+import { get } from 'lodash';
 
 @Component({
     selector: 'lib-discuss-category',
@@ -67,8 +64,8 @@ export class DiscussCategoryComponent implements OnInit, OnDestroy {
     this.telemetryUtils.logImpression(NSDiscussData.IPageName.CATEGORY);
     this.forumIds = this.categoryIds ? this.categoryIds : this.discussService.forumIds;
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe((params) => {
-      if (_.get(params, 'cid')) {
-        this.navigateToDiscussionPage(_.get(params, 'cid'));
+      if (get(params, 'cid')) {
+        this.navigateToDiscussionPage(get(params, 'cid'));
       } else {
         this.categories = [];
         if (this.forumIds.length) {
@@ -124,17 +121,17 @@ export class DiscussCategoryComponent implements OnInit, OnDestroy {
     this.telemetryUtils.uppendContext({ id: cid, type: 'Category' });
     this.discussService.fetchSingleCategoryDetails(cid).subscribe(response => {
       this.showLoader = false;
-      this.categoryId = _.get(response, 'cid');
-      this.isTopicCreator = _.get(response, 'privileges.topics:create') === true ? true : false;
+      this.categoryId = get(response, 'cid');
+      this.isTopicCreator = get(response, 'privileges.topics:create') === true ? true : false;
       this.showStartDiscussionModal = false;
       let input
-      if (_.get(response, 'children').length > 0) {
+      if (get(response, 'children').length > 0) {
         this.router.navigate([], { relativeTo: this.activatedRoute.parent, queryParams: { cid: this.categoryId } });
 
         // input = { data: { url: '', queryParams: { cid: this.categoryId } }, action: this.categoryAction}
         // this.navigationService.navigate(input)
 
-        _.get(response, 'children').forEach(subCategoryData => {
+        get(response, 'children').forEach(subCategoryData => {
           this.categories.push(subCategoryData);
         });
       } else {

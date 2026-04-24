@@ -1,7 +1,4 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-
-/* tslint:disable */
-import * as _ from 'lodash'
 import { DiscussionService } from '../../services/discussion.service';
 import { NSDiscussData } from '../../models/discuss.model';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
@@ -11,7 +8,7 @@ import { ConfigService } from '../../services/config.service';
 import * as CONSTANTS from './../../common/constants.json';
 import { DiscussUtilsService } from '../../services/discuss-utils.service';
 import { NavigationServiceService } from '../../navigation-service.service';
-/* tslint:enable */
+import { get } from 'lodash';
 
 @Component({
     selector: 'lib-discuss-tags',
@@ -56,7 +53,7 @@ export class DiscussTagsComponent implements OnInit {
     this.showLoader = true;
     this.discussionService.fetchAllTag().subscribe((data: any) => {
       this.showLoader = false;
-      this.filteredTags = _.get(data, 'tags');
+      this.filteredTags = get(data, 'tags');
     }, error => {
       this.showLoader = false;
       // TODO: toaster
@@ -71,7 +68,7 @@ export class DiscussTagsComponent implements OnInit {
     this.showLoader = true;
     this.discussionService.contextBasedTags(req).subscribe((data: any) => {
       this.showLoader = false;
-      this.filteredTags = _.get(data, 'result');
+      this.filteredTags = get(data, 'result');
     }, error => {
       this.showLoader = false;
       // TODO: toaster

@@ -4,10 +4,8 @@ import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { NSDiscussData } from './../../models/discuss.model';
 import { Router } from '@angular/router';
 import * as CONSTANTS from '../../common/constants.json';
-/* tslint:disable */
-import * as _ from 'lodash'
 import { ConfigService } from '../../services/config.service';
-/* tslint:enable */
+import { get } from 'lodash';
 
 @Component({
     selector: 'lib-my-discussion',
@@ -38,8 +36,8 @@ export class MyDiscussionComponent implements OnInit {
       this.showLoader = false;
       //console.log(response);
       this.data = response;
-      if (_.get(this.data, 'posts')) {
-        this.discussionList = _.get(this.data, 'posts').filter(p => (p.isMainPost === true));
+      if (get(this.data, 'posts')) {
+        this.discussionList = get(this.data, 'posts').filter(p => (p.isMainPost === true));
       }
       // if (this.configSvc.userProfile) {
       //   localStorage.setItem(this.configSvc.userProfile.userId, this.profilePhoto);
@@ -64,17 +62,17 @@ export class MyDiscussionComponent implements OnInit {
       this.currentFilter = key;
       switch (key) {
         case 'timestamp':
-          // this.discussionList = _.uniqBy(_.filter(this.data.posts, p => _.get(p, 'isMainPost') === true), 'tid');
+          // this.discussionList = uniqBy(filter(this.data.posts, p => get(p, 'isMainPost') === true), 'tid');
           this.discussionList = this.data.posts.filter(p => (p.isMainPost === true));
           break;
         case 'best':
-          // this.discussionList = _.uniqBy(this.data.bestPosts, 'tid');
+          // this.discussionList = uniqBy(this.data.bestPosts, 'tid');
           this.discussionList = this.data.bestPosts;
           break;
         case 'saved':
           this.discussService.fetchSaved().subscribe(response => {
             if (response) {
-              // this.discussionList = _.uniqBy(response['posts'], 'tid');
+              // this.discussionList = uniqBy(response['posts'], 'tid');
               this.discussionList = response['posts'];
             } else {
               this.discussionList = [];
@@ -91,7 +89,7 @@ export class MyDiscussionComponent implements OnInit {
         case 'upvoted':
           this.discussService.fetchUpvoted().subscribe(response => {
             if (response) {
-              // this.discussionList = _.uniqBy(response['posts'], 'tid');
+              // this.discussionList = uniqBy(response['posts'], 'tid');
               this.discussionList = response['posts'];
             } else {
               this.discussionList = [];
@@ -106,7 +104,7 @@ export class MyDiscussionComponent implements OnInit {
         case 'downvoted':
           this.discussService.fetchDownvoted().subscribe(response => {
             if (response) {
-              // this.discussionList = _.uniqBy(response['posts'], 'tid');
+              // this.discussionList = uniqBy(response['posts'], 'tid');
               this.discussionList = response['posts'];
             } else {
               this.discussionList = [];
@@ -118,7 +116,7 @@ export class MyDiscussionComponent implements OnInit {
             });
           break;
         default:
-          // this.discussionList = _.uniqBy(this.data.latestPosts, 'tid');
+          // this.discussionList = uniqBy(this.data.latestPosts, 'tid');
           this.discussionList = this.data.latestPosts;
           break;
       }
@@ -127,7 +125,7 @@ export class MyDiscussionComponent implements OnInit {
 
   navigateToDiscussionDetails(discussionData) {
     console.log('discussionData', discussionData);
-    this.router.navigate([`${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${_.get(discussionData, 'topic.slug')}`], { queryParamsHandling: "merge" });
+    this.router.navigate([`${this.configService.getRouterSlug()}${CONSTANTS.ROUTES.TOPIC}${get(discussionData, 'topic.slug')}`], { queryParamsHandling: "merge" });
   }
 
   logTelemetry(event) {
