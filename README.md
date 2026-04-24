@@ -144,6 +144,7 @@ if (!CsModule.instance.isInitialised) { // Singleton initialised or not
 |--|--|
 |angular-15|3.0.0|
 |angular-16|4.0.0|4.0.1|
+|angular-21|5.0.0|
 
 
 
