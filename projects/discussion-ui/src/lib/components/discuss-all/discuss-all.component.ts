@@ -7,9 +7,8 @@ import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { NSDiscussData } from '../../models/discuss.model';
 import { Subject, Subscription } from 'rxjs';
 import { DiscussionUIService } from '../../services/discussion-ui.service';
-import { filter, map, takeUntil } from 'rxjs/operators'
-import { get, union, orderBy, flatten } from 'lodash';
-
+import { filter, takeUntil } from 'rxjs/operators'
+import { get, union } from 'lodash';
 /* tslint:enable */
 
 @Component({
@@ -87,17 +86,19 @@ export class DiscussAllComponent implements OnInit {
       }
     });
     this.telemetryUtils.logImpression(NSDiscussData.IPageName.HOME);
-    if (this.context) {
-      this.showLoader = false;
-      this.isWidget = true
-      this.getForumIds()
-    } else {
-      this.showLoader = false;
-      this.cIds = this.configService.getCategories().result
-      this.loadDiscussionData()
-    }
-
+    setTimeout(() => {
+      if (this.context) {
+        this.showLoader = false;
+        this.isWidget = true
+        this.getForumIds()
+      } else {
+        this.showLoader = false;
+        this.cIds = this.configService.getCategories()?.result || [];
+        this.loadDiscussionData()
+      }
+    })
   }
+
   async getForumIds() {
     let body = {
       "identifier":
@@ -233,17 +234,12 @@ export class DiscussAllComponent implements OnInit {
     this.showLoader = true;
     return this.discussionService.fetchRecentD().subscribe(
       (data: any) => {
-        //console.log("getRecentData", data)
         this.showLoader = false;
         this.discussionList = [];
-        filter(data.topics, (topic) => {
-          if (topic.user.uid !== 0 && topic.cid !== 1) {
-            this.discussionList.push(topic);
-          }
-        });
+        const topics = data?.topics || [];
+        this.discussionList = topics.filter((topic: any) => topic.user?.uid !== 0 && topic.cid !== 1);
       }, error => {
         this.showLoader = false;
-        // TODO: Toaster
         console.log('error fetching topic list', error);
       });
   }
@@ -254,6 +250,7 @@ export class DiscussAllComponent implements OnInit {
      this.loadDiscussionData()
    }
   }
+
   getContextData(cid: any) {
     this.showLoader = true;
     const req = {
@@ -262,23 +259,25 @@ export class DiscussAllComponent implements OnInit {
     return this.discussionService.getContextBasedDiscussion(req).subscribe(
       (data: any) => {
         this.showLoader = false;
-        const result = data && data.result ? data.result : [];
+        const result = data?.result || [];
         const res = result.filter((elem: any) => elem.statusCode !== 404);
-        if (res && res.length > 0) {
+        if (res.length > 0) {
           this.privilegesData = res[0].privileges;
-          this.allTopics = res.map((item: any) => item.topics);
 
-          const flatTopics = flatten(this.allTopics);
-          this.discussionList = orderBy(flatTopics, ['tid'], ['desc']);
+          const flatTopics = res.flatMap((item: any) => item.topics || []);
+          this.discussionList = flatTopics.sort((a: any, b: any) => {
+            return (b.tid || 0) - (a.tid || 0);
+          });
         } else {
           this.discussionList = [];
           this.privilegesData = null;
         }
-      }, error => {
+      },
+      error => {
         this.showLoader = false;
-        // TODO: Toaster
-        console.log('error fetching topic list', error);
-      });
+        console.error('error fetching topic list', error);
+      }
+    );
   }
 
   fetchAllTags() {

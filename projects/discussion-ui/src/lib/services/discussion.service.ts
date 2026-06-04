@@ -37,10 +37,6 @@ export class DiscussionService {
       core: {
         httpAdapter: 'HttpClientBrowserAdapter',
         global: {
-          // channelId: '', // required
-          // producerId: '', // required
-          // deviceId: '', // required
-          // sessionId: '',
         },
         api: {
           host: `${location.origin}/apis/proxies/v8`, // default host
