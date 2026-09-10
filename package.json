@@ -1,6 +1,6 @@
 {
   "name": "sunbird-ed-discussions-ui-v8",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
