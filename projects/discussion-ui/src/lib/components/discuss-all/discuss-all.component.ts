@@ -112,12 +112,31 @@ export class DiscussAllComponent implements OnInit {
         this.cIds.push(forum.cid)
       });
     } else {
-      this.discussionService.createForum(this.context.categoryObj).subscribe(((data: any) => {
-        data.result.forEach(forum => {
-          this.cIds.push(forum.newCid)
+      // Wait for the forum to exist before loading its data.
+      //
+      // createForum() is asynchronous, so calling loadDiscussionData() straight
+      // afterwards ran it while cIds was still empty - the category lookup then
+      // went out with an empty array, which the NodeBB plugin rejects. The forum
+      // did get created, so a manual refresh appeared to fix it, but the first
+      // visit to any course always showed an empty discussion.
+      await new Promise<void>(resolve => {
+        const created$ = this.discussionService.createForum(this.context.categoryObj);
+        if (!created$) {
+          resolve();
+          return;
+        }
+        created$.subscribe({
+          next: (data: any) => {
+            (data?.result || []).forEach((forum: any) => {
+              this.cIds.push(forum.newCid);
+            });
+          },
+          // Resolve either way - a failed create should still render the empty
+          // state rather than leaving the caller hanging.
+          error: () => resolve(),
+          complete: () => resolve(),
         });
-      }))
-
+      });
     }
     this.loadDiscussionData()
   }
