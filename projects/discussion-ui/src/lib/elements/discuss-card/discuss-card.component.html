@@ -28,10 +28,8 @@
         <div class="kabab-menu" id="group-actions" (click)="onMenuClick()"></div>
         <div class="kabab-menu-dropdown-content" [hidden]="dropdownContent">
           <div>
-            <div class="list" (click)="editTopic(discussionData)" i18n>Edit</div>
-            <div id="delete-topic" class="list" (click)="deleteTopic($event, discussionData.tid)" i18n>
-              Delete
-            </div>
+            <div class="list" (click)="editTopic(discussionData)">{{ 'Edit' | translate }}</div>
+            <div id="delete-topic" class="list" (click)="deleteTopic($event, discussionData.tid)">{{ 'Delete' | translate }}</div>
           </div>
         </div>
       </div>
@@ -80,8 +78,7 @@
 <div class="discuss-card-comments">
   <div class="discuss-comments-area mb-2">
     <span class="votes-content">
-      <span class="discuss-card-label" (click)="replyHandler(discussionData)" i18n>
-          Reply</span>
+      <span class="discuss-card-label" (click)="replyHandler(discussionData)">{{ 'Reply' | translate }}</span>
 
       <span class="views-content">
         @if (discussionData.votes <= 0) {
@@ -117,7 +114,7 @@
     <div class="row discuss-card-label label-wrapper">
       @if (!replyFlag) {
         <div (click)="showReply(discussionData)">
-          <div><span i18n>View </span> {{ discussionData?.postcount - 1 }} <span i18n>Replies</span></div>
+          <div><span>{{ 'View' | translate }}</span> {{ discussionData?.postcount - 1 }} <span>{{ 'Replies' | translate }}</span></div>
         </div>
       }
       @if (replyFlag) {
@@ -172,12 +169,8 @@
                     }
                     <div class="post-menu-dropdown-content" [class.active]="post === activePost">
                       <div>
-                        <div class="list" (click)="editReplyPost(post, data)" i18n>
-                      Edit
-                    </div>
-                        <div class="list" (click)="deleteReply(post, data)" i18n>
-                      Delete
-                    </div>
+                        <div class="list" (click)="editReplyPost(post, data)">{{ 'Edit' | translate }}</div>
+                        <div class="list" (click)="deleteReply(post, data)">{{ 'Delete' | translate }}</div>
                       </div>
                     </div>
                   </div>

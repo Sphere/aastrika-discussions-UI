@@ -28,7 +28,9 @@ export class PostReplyComponent implements OnInit {
 
   initializeFormFields() {
     this.replyForm = this.formBuilder.group({
-      replyContent: ['', [Validators.required, Validators.minLength(2)]]
+      // 8 to match NodeBB's minimumPostLength - 2 let through replies the server
+      // then rejected with a message the middleware makes unreadable.
+      replyContent: ['', [Validators.required, Validators.minLength(8)]]
     });
     this.replyForm.valueChanges.subscribe(val => {
       this.isButtonEnabled = this.validateForm();

@@ -119,6 +119,8 @@
 	pointer-events: auto;
 
 	.discussion-start-modal-content {
+		// portal overlay elevation (matches the host app dialog standard)
+		box-shadow: 0 18px 40px rgba(16, 24, 40, 0.14);
 		// max-width: 1260px;
 		// width: 90%;
 		width: 750px;
@@ -126,8 +128,8 @@
 		position: relative;
 		margin: 0 auto;
 		padding: 24px;
-		border-radius: 3px;
-		background: var(--white);
+		border-radius: 8px;
+		background: var(--theme-bg, #ffffff);
 		position: absolute;
 		top: 55%;
 		left: 50%;
@@ -419,6 +421,8 @@ select.post_form_select:focus {
 	}
 	.discussion-start-modal {
 		.discussion-start-modal-content {
+			// portal overlay elevation (matches the host app dialog standard)
+			box-shadow: 0 18px 40px rgba(16, 24, 40, 0.14);
 			width: 95%;
 			max-width: 95%;
 			box-sizing: border-box;

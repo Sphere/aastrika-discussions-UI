@@ -1,6 +1,7 @@
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { CategoryCardComponent } from './category-card/category-card.component';
 import { DiscussCardComponent } from './discuss-card/discuss-card.component';
 import { AvatarPhotoComponent } from './avatar-photo/avatar-photo.component';
@@ -32,6 +33,9 @@ import { DiscussEditComponent } from './discuss-start/discuss-edit.component';
   ],
   imports: [
     CommonModule, PipesModule,
+    // Uses the host app's ngx-translate instance, same as @aastrika_npmjs/comptency,
+    // so strings resolve from the portal's en.json / hi.json.
+    TranslateModule,
      FormsModule,
     ReactiveFormsModule,
     // ComponentsModule

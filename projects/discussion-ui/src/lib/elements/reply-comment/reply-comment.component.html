@@ -1,11 +1,11 @@
 <div class="reply-component">
   <div class="df-btn-container">
-    <button (click)="goBack()" type="button" class="df-btn df-back-btn" i18n>
-      <img src="./assets/discussion-ui/images/back-img.png" alt="back-image" />
-      Back
+    <button (click)="goBack()" type="button" class="df-btn df-back-btn">
+      <img src="./assets/discussion-ui/images/back-img.png" alt="back" />
+      {{ 'Back' | translate }}
     </button>
   </div>
-  <div class="repy-title" i18n>Replying to</div>
+  <div class="repy-title">{{ 'Replying to' | translate }}</div>
 
   <!-- <div *ngIf="displayState === 'EDIT REPLY' ">
 
@@ -41,17 +41,17 @@
   <form [formGroup]="replyForm" class="d-flex">
     <input
       class="replay-field"
-      placeholder="Join the Conversation"
-      minlength="2"
+      [placeholder]="'Join the Conversation' | translate"
+      [attr.minlength]="minReplyLength"
       aria-label="Type your message here"
       formControlName="replyContent"
-      i18n-placeholder
       />
     <button
       class="reply-btn"
       (click)="onReplyClick('reply')"
       id="update-post"
       type="button"
+      [disabled]="isSubmitting"
       >
       <img src="./assets/discussion-ui/images/send-icon.png" />
     </button>
@@ -61,12 +61,18 @@
     (replyForm.controls['replyContent'].dirty ||
     replyForm.controls['replyContent'].touched)
     ) {
-    <!-- test -->
     @if (replyForm.controls['replyContent'].errors?.minlength) {
-      <small
-        class="text-error"
-      i18n>It should be minimum of 2 characters</small>
+      <small class="text-error">{{ 'DISCUSSION_MIN_LENGTH' | translate:{ count: minReplyLength } }}</small>
     }
+    @if (replyForm.controls['replyContent'].errors?.required) {
+      <small class="text-error">{{ 'DISCUSSION_REPLY_REQUIRED' | translate }}</small>
+    }
+  }
+  <!-- Server-side rejection (rate limit, moderation, anything else). Without this
+       the request failed silently and the reply simply never appeared.
+       submitError holds a translation key, not a sentence. -->
+  @if (submitError) {
+    <small class="text-error" role="alert">{{ submitError | translate }}</small>
   }
 </div>
 </div>

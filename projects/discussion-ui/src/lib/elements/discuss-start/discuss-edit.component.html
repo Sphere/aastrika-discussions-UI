@@ -21,8 +21,7 @@
                     }
                   </select>
                 </div>
-                <!-- <small class="text-error" *ngIf="showError('question')" i18n="category Error|Explains category is required">
-              category is mandatory</small> -->
+                <!-- <small class="text-error" *ngIf="showError('question')">{{ 'category is mandatory' | translate }}</small> -->
             </div>
           }
 
@@ -31,8 +30,8 @@
             <!-- <label class="start-form-label">Ask a question or post an idea<span class="required"></span></label> -->
             <!-- <h1>this is test heading</h1> -->
             <div>
-              <textarea class="start-form-field-control question_input_field" placeholder="Ask a question or post an idea"
-                formControlName="question"   rows="8"#question maxlength="1000" [required]="true" i18n-placeholder>
+              <textarea class="start-form-field-control question_input_field" [placeholder]="'Ask a question or post an idea' | translate"
+                formControlName="question"   rows="8"#question maxlength="1000" [required]="true">
               </textarea>
 
             </div>
@@ -40,15 +39,14 @@
               <!-- test -->
               @if (startForm.controls['question'].errors?.minlength) {
                 <small class="text-error"
-                i18n>Question is mandatory. It should be minimum of 8 characters</small>
+               >{{ 'Question is mandatory. It should be minimum of 8 characters' | translate }}</small>
               }
               @if (startForm.controls['question'].errors?.maxlength) {
                 <small class="text-error"
-                i18n>It should be maxmimum of 200 characters</small>
+               >{{ 'It should be maxmimum of 200 characters' | translate }}</small>
               }
             }
-            <!-- <small class="text-error" *ngIf="showError('question')"  i18n="question Error|Explains question is required">
-          Question is mandatory</small> -->
+            <!-- <small class="text-error" *ngIf="showError('question')" >{{ 'Question is mandatory' | translate }}</small> -->
         </div>
       </div>
 
@@ -56,11 +54,11 @@
         <!-- <label class="start-form-label">Please elaborate your question or idea here<span class="required"></span></label> -->
         <div>
           <!-- <textarea minlength="8" class="start-form-field-control textarea_box" rows="8" formControlName="description" #description
-        name="moretext" placeholder="Please elaborate your question or idea here"></textarea> -->
+        name="moretext" [placeholder]="'Please elaborate your question or idea here' | translate"></textarea> -->
       </div>
       <!-- <small class="text-error" *ngIf="showError('description')"
-      i18n="description Error|Explains description is required"> Description is mandatory. It should be minimum of
-    8 characters </small> -->
+     >{{ 'Description is mandatory. It should be minimum of
+    8 characters' | translate }}</small> -->
   </div>
 
   <!-- <div #postTags [ngClass]="{ 'is-invalid': showError('tags') }" class="post-tags ">
@@ -83,8 +81,7 @@
 
 <div class="start-modal-buttons">
   <button (click)="closeModal('discard');logTelemetry($event)" type="button" class="df-btn df-discard-btn"
-    id="discard-discussion-start-form" i18n>Discard
-            </button>
+    id="discard-discussion-start-form">{{ 'Discard' | translate }}</button>
   @if (uploadSaveData) {
     <span class="px-4">
     </span>
@@ -93,14 +90,14 @@
     <button type="submit" class="df-btn df-submit-btn"
       [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton"
       (click)="submitPost(startForm);logTelemetry($event)" id="submit-discussion-start-form">
-      <span class="text-white" i18n>Submit Post</span>
+      <span class="text-white">{{ 'Submit Post' | translate }}</span>
     </button>
   }
   @if (mode === 'edit') {
     <button type="submit" class="df-btn df-update-btn"
       [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton"
       (click)="updatePost(startForm);logTelemetry($event)" id="update-topic-popup">
-      <span class="text-white" i18n>Update</span>
+      <span class="text-white">{{ 'Update' | translate }}</span>
     </button>
   }
 </div>

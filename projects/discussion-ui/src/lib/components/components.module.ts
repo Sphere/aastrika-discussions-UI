@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { ElementsModule } from './../elements/elements.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { SidePannelComponent } from './side-pannel/side-pannel.component';
 import { DiscussHomeComponent } from './discuss-home/discuss-home.component';
 import { DiscussCategoryComponent } from './discuss-category/discuss-category.component';
@@ -55,6 +56,7 @@ import { ReplyCommentComponent } from '../elements/reply-comment/reply-comment.c
         LeaderBoardComponent,
         ReplyCommentComponent
     ], imports: [CommonModule,
+        TranslateModule,
         ElementsModule,
         FormsModule,
         ReactiveFormsModule,

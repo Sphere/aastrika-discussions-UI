@@ -5,12 +5,11 @@
         <form [formGroup]="replyForm" class="d-flex flex-col pb-2 pt-1 mt-3">
           <input
             class="post-field"
-            placeholder="Join the Conversation"
+            [placeholder]="'Join the Conversation' | translate"
             minlength="2"
             aria-label="Type your message here"
             formControlName="replyContent"
             [ngModel]="content"
-            i18n-placeholder
             />
           @if (
             replyForm.controls['replyContent'].invalid &&
@@ -21,18 +20,18 @@
             @if (replyForm.controls['replyContent'].errors?.minlength) {
               <small
                 class="text-error"
-              i18n>It should be minimum of 2 characters</small>
+             >{{ 'It should be minimum of 2 characters' | translate }}</small>
             }
           }
         </form>
         <div class="updatePostActions mt-3 mb-0">
           @if (showCancel) {
             <button class="df-btn df-cancel-btn" (click)="onCancelClick()" id="cancel-update-post"
-            type="button" i18n>Cancel</button>
+            type="button">{{ 'Cancel' | translate }}</button>
           }
           @if (mode === 'edit') {
             <button [ngClass]="{'df-btn-disabled': !isButtonEnabled }" [disabled]="!isButtonEnabled"
-            class="df-btn df-update-btn" (click)="onReplyClick('edit')" id="update-post" type="button" i18n>Done</button>
+            class="df-btn df-update-btn" (click)="onReplyClick('edit')" id="update-post" type="button">{{ 'Done' | translate }}</button>
           }
         </div>
       </div>

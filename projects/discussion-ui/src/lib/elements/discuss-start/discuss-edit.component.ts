@@ -58,6 +58,9 @@ export class DiscussEditComponent implements OnInit {
   initializeFormFields(topicData: any) {
     this.startForm = this.formBuilder.group({
       question: ['', [Validators.required , Validators.minLength(8) , Validators.maxLength(200), this.noWhitespaceValidator]],
+      // No length rule here: the textarea is commented out in the template, so this
+      // control is filled programmatically from the existing post. A minLength would
+      // block editing any post whose body is shorter than the limit.
       description: ['', Validators.required],
       tags: [],
       category: []

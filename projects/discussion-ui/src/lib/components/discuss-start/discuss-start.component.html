@@ -21,8 +21,7 @@
                     }
                   </select>
                 </div>
-                <!-- <small class="text-error" *ngIf="showError('question')" i18n="category Error|Explains category is required">
-              category is mandatory</small> -->
+                <!-- <small class="text-error" *ngIf="showError('question')">{{ 'category is mandatory' | translate }}</small> -->
             </div>
           }
 
@@ -31,20 +30,19 @@
             <!-- <label class="start-form-label">Ask a question or post an idea<span class="required"></span></label> -->
             <!-- <h1>this is test heading</h1> -->
             <div>
-              <textarea  class="start-form-field-control question_input_field" rows="8" placeholder="Ask a question or post an idea"
-              formControlName="question" #question [required]="true" i18n-placeholder> </textarea>
+              <textarea  class="start-form-field-control question_input_field" rows="8" [placeholder]="'Ask a question or post an idea' | translate"
+              formControlName="question" #question [required]="true"> </textarea>
             </div>
-            <!-- <small class="text-error" *ngIf="showError('question')"  i18n="question Error|Explains question is required">
-          Question is mandatory</small> -->
+            <!-- <small class="text-error" *ngIf="showError('question')" >{{ 'Question is mandatory' | translate }}</small> -->
           @if (startForm.controls['question'].invalid && (startForm.controls['question'].dirty || startForm.controls['question'].touched)) {
             <!-- test -->
             @if (startForm.controls['question'].errors?.minlength) {
               <small class="text-error"
-              i18n>Question is mandatory. It should be minimum of 8 characters</small>
+             >{{ 'Question is mandatory. It should be minimum of 8 characters' | translate }}</small>
             }
             @if (startForm.controls['question'].errors?.maxlength) {
               <small class="text-error"
-              i18n>It should be maxmimum of 200 characters</small>
+             >{{ 'It should be maxmimum of 200 characters' | translate }}</small>
             }
           }
 
@@ -55,13 +53,13 @@
       <!-- <div class="start-form-field textarea_form_field_box">
       <div>
         <textarea minlength="8" class="start-form-field-control textarea_box" rows="8" formControlName="description" #description
-        name="moretext" placeholder="Please elaborate your question or idea here"></textarea>
+        name="moretext" [placeholder]="'Please elaborate your question or idea here' | translate"></textarea>
       </div>
       <ng-container *ngIf="startForm.controls['description'].invalid && (startForm.controls['description'].dirty || startForm.controls['description'].touched)" >
 
         <small class="text-error" *ngIf="startForm.controls['description'].errors?.minlength"
-          i18n="description Error|Explains description is required"> Description is mandatory. It should be minimum of
-        8 characters </small>
+         >{{ 'Description is mandatory. It should be minimum of
+        8 characters' | translate }}</small>
       </ng-container>
     </div>  -->
 
@@ -78,7 +76,7 @@
   @if (showErrorMsg) {
     <div>
       <small class="mandatory-label">
-        {{createErrorMsg}}
+        {{ createErrorMsg | translate }}
       </small>
     </div>
   }
@@ -86,19 +84,19 @@
   <div class="start-modal-buttons">
     <button (click)="closeModal('discard');logTelemetry($event)" type="button" class="df-btn df-discard-btn"
       id="discard-discussion-start-form ">
-      <span class="font-weight-500" i18n>Discard</span>
+      <span class="font-weight-500">{{ 'Discard' | translate }}</span>
     </button>
 
     <button type="submit" class="df-btn df-submit-btn"
       [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton && !startForm.hasError('whitespace')"
       (click)="submitPost(startForm);logTelemetry($event)" id="submit-discussion-start-form">
-      <span class="text-white font-weight-500" i18n>Submit Post</span>
+      <span class="text-white font-weight-500">{{ 'Submit Post' | translate }}</span>
     </button>
     @if (mode === 'edit') {
       <button type="submit" class="df-btn df-update-btn"
         [ngClass]="{'df-btn-disabled': !enableSubmitButton }" [disabled]="!enableSubmitButton && !startForm.hasError('whitespace')"
         (click)="updatePost(startForm);logTelemetry($event)" id="update-topic-popup">
-        <span class="text-white font-weight-500" i18n>Update</span>
+        <span class="text-white font-weight-500">{{ 'Update' | translate }}</span>
       </button>
     }
   </div>

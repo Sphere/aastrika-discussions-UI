@@ -221,37 +221,41 @@
 
 .kabab-menu-dropdown-content {
     position: absolute;
-    border-radius: 2px;
-    background-color: #ffffff;;
-    box-shadow: 0px 0px 4px 0px #00000026;
+    // Radius, elevation and colours follow the host portal's overlay standard
+    // instead of the old 2px / faint-shadow look. Colours come from the host's
+    // theme tokens so light and dark both work without a per-app override.
+    border-radius: 8px;
+    background-color: var(--theme-bg, #ffffff);
+    color: var(--theme-text, #4a4a4a);
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+    border: 1px solid var(--theme-border, rgba(16, 24, 40, 0.08));
+    overflow: hidden; // let the radius clip the first and last rows
 
-    /* padding: 8px; */
     z-index: 9;
-    text-align: center;
+    text-align: left;
     right: 22px;
     top: 50px;
-    min-width: 101px;
-    // border-bottom: 0.5px solid #DDDDDD;
-    color: #808080;
+    min-width: 132px;
+    padding: 4px 0;
+
     .list {
         cursor: pointer;
         font-size: 14px;
-        padding: 8px;
+        padding: 10px 16px;
         display: flex;
         align-items: center;
         width: 100%;
-        border-bottom: 0.5px solid #DDDDDD;
-        // &:hover,
-        // &:active {
-        //     background-color: var(--primary-100);
-        // }
+        transition: background-color 0.18s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--theme-surface, rgba(16, 24, 40, 0.04));
+        }
+
         &:last-child {
             border: none;
-            // .sb-btn-normal {
-            //     // color: var(--red-400);
-                
-            // }
         }
+
         .sb-btn-normal {
             font-size: 14px;
         }
@@ -271,7 +275,7 @@
 }
 
 .discussion-card-comment{
-    font-family: Roboto;
+    font-family: inherit;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -312,7 +316,7 @@
     // align-items: flex-end;
     margin-left: 2px !important;
     /* padding-top: 3px; */
-    font-family: 'Roboto' !important;
+    font-family: inherit;
     font-size: 12px;
     font-weight: 400;
     color: #808080;
@@ -363,37 +367,41 @@
 
 .post-menu-dropdown-content {
     position: absolute;
-    border-radius: 2px;
-    background-color: #ffffff;;
-    box-shadow: 0px 0px 4px 0px #00000026;
+    // Kept identical to .kabab-menu-dropdown-content above - the two menus sit on
+    // the same screen and previously drifted apart.
+    border-radius: 8px;
+    background-color: var(--theme-bg, #ffffff);
+    color: var(--theme-text, #4a4a4a);
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+    border: 1px solid var(--theme-border, rgba(16, 24, 40, 0.08));
+    overflow: hidden;
     display: none;
-    /* padding: 8px; */
+
     z-index: 9;
-    text-align: center;
+    text-align: left;
     right: 22px;
     top: 50px;
-    min-width: 101px;
-    // border-bottom: 0.5px solid #DDDDDD;
-    color: #808080;
+    min-width: 132px;
+    padding: 4px 0;
+
     .list {
         cursor: pointer;
         font-size: 14px;
-        padding: 8px;
+        padding: 10px 16px;
         display: flex;
         align-items: center;
         width: 100%;
-        border-bottom: 0.5px solid #DDDDDD;
-        // &:hover,
-        // &:active {
-        //     background-color: var(--primary-100);
-        // }
+        transition: background-color 0.18s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--theme-surface, rgba(16, 24, 40, 0.04));
+        }
+
         &:last-child {
             border: none;
-            // .sb-btn-normal {
-            //     // color: var(--red-400);
-                
-            // }
         }
+
         .sb-btn-normal {
             font-size: 14px;
         }

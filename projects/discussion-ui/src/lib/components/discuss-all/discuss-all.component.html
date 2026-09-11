@@ -14,7 +14,7 @@ data-target="#myModal" id="start-discussion">Start Discussion</button> -->
           <a href="javascript:void(0)" class="flex flex-1 cursor-pointer margin-fix height-48  w-6/12" i18n-aria-label role="link">
             <div class="flex flex-1 items-center border discuss border-solid discuss-border ws-mat-primary-background-op100 ">
               <div class="w-full discuss truncate">
-                <span class="overflow ml-4 start-btn-hint mb-0 mat-body-1" i18n>Start a Conversation</span>
+                <span class="overflow ml-4 start-btn-hint mb-0 mat-body-1">{{ 'Start a Conversation' | translate }}</span>
               </div>
               <div>
                 <img src="./assets/discussion-ui/images/send-icon.png">
@@ -30,7 +30,7 @@ data-target="#myModal" id="start-discussion">Start Discussion</button> -->
     </div>
     @if (discussionList  && discussionList.length >= 0) {
       <div [ngClass]="{ 'mobile-bottom' : discussionList.length === 0}" class="comment-count font-normal font-sans text-2xl py-6 pl-2">
-        {{discussionList.length}} <span i18n>Comments</span>
+        {{discussionList.length}} <span>{{ 'Comments' | translate }}</span>
       </div>
     }
     <!-- <ng-container>

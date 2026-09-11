@@ -28,7 +28,8 @@ export class DiscussStartComponent implements OnInit {
   showErrorMsg = false;
   showSelectCategory = false;
   createErrorMsg = '';
-  defaultError = 'Something went wrong, Please try again after sometime!';
+  // A translation key, resolved by the host app's ngx-translate.
+  defaultError = 'DISCUSSION_POST_FAILED';
 
   enableSubmitButton = false;
   cIds: any;
@@ -58,7 +59,12 @@ export class DiscussStartComponent implements OnInit {
   initializeFormFields(topicData: any) {
     this.startForm = this.formBuilder.group({
       question: ['', [Validators.required , Validators.minLength(8) , Validators.maxLength(200), this.noWhitespaceValidator]],
-      description: ['test 12345'],
+      // Deliberately unvalidated and empty. Its textarea is commented out in the
+      // template, so the user cannot fill it - adding validators here would make
+      // the form permanently invalid and disable Submit. It used to default to the
+      // literal 'test 12345', which then shipped as the body of every post; see
+      // submitPost, which falls back to the question text instead.
+      description: [''],
       tags: [],
       category: []
     });
@@ -138,10 +144,27 @@ export class DiscussStartComponent implements OnInit {
   public submitPost(form: any) {
     this.uploadSaveData = true;
     this.showErrorMsg = false;
+    // categoryId arrives from discuss-all as this.cIds, which is ALREADY an array.
+    // The old code did `this.categoryId ? [this.categoryId] : ...`, which broke twice:
+    //   - it wrapped the array again, sending cid: [[5]] instead of [5]
+    //   - an empty array is truthy in JS, so no-forum courses sent cid: [[]]
+    // Both produce a post against a category that does not exist.
+    let provided: any[] = [];
+    if (Array.isArray(this.categoryId)) {
+      provided = this.categoryId;
+    } else if (this.categoryId !== undefined && this.categoryId !== null) {
+      provided = [this.categoryId];
+    }
+    // The description textarea is commented out in the template, so its control is
+    // always empty for a new post - fall back to the question, which is the text the
+    // user actually typed. Previously this sent the control's 'test 12345' default,
+    // so every comment body was that string. Edit mode still fills description from
+    // the existing post, so it keeps taking precedence when present.
+    const description = (form.value.description || '').trim();
     const postCreateReq = {
-      cid: this.categoryId ? [this.categoryId] : [parseInt(form.value.category)],
+      cid: provided.length ? provided : [parseInt(form.value.category)],
       title: form.value.question,
-      content: form.value.description,
+      content: description || form.value.question,
       tags: form.value.tags,
     };
     this.enableSubmitButton = false;
@@ -160,18 +183,33 @@ export class DiscussStartComponent implements OnInit {
         // close the modal
       },
       (err: any) => {
-        this.closeModal('discard');
-        // error toast
-        // .openSnackbar(this.toastError.nativeElement.value)
+        // Deliberately NOT closing the modal here. It used to call
+        // closeModal('discard') first, which tore the dialog down before the
+        // message below could ever be seen - so a rejected post looked like the
+        // send button had simply done nothing, and the user's text was lost.
         this.uploadSaveData = false;
         this.enableSubmitButton = true;
-        if (err) {
-          if (err.error && err.error.message) {
-            this.showErrorMsg = true;
-            this.createErrorMsg = err.error.message.split('|')[1] || this.defaultError;
-          }
-        }
+        this.showErrorMsg = true;
+        this.createErrorMsg = this.toUserMessage(err);
       });
+  }
+
+  /**
+   * The middleware replaces NodeBB's real reason with a generic
+   * "request payload is incorrect", and wraps it as params.errmsg rather than
+   * message - so the old `err.error.message.split('|')[1]` found nothing and no
+   * error was shown at all. Length is validated by the form now, so a rejection
+   * here is most often NodeBB's post-rate limit.
+   */
+  private toUserMessage(err: any): string {
+    const raw = (err?.error?.params?.errmsg || err?.error?.message || '').toString();
+    if (/too short|minimum/i.test(raw)) {
+      return 'DISCUSSION_POST_TOO_SHORT';
+    }
+    if (/only post every|rate|flood|too fast/i.test(raw)) {
+      return 'DISCUSSION_POST_TOO_QUICK';
+    }
+    return this.defaultError;
   }
 
 

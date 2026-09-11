@@ -301,15 +301,29 @@ export class DiscussionService {
   }
 
   registerUser(data: any) {
-    return this.http.post(urlConfig.registerUser(), data);
+    return this.inZone(this.http.post(urlConfig.registerUser(), data));
   }
 
   createForum(data: any){
     return this.inZone(this.csDiscussionService?.createForum(data));
   }
 
+  /**
+   * Wrapped before .toPromise(), not after.
+   *
+   * A promise resolved outside the Angular zone keeps every `await` continuation
+   * outside it too - and discuss-all does `await getForumIds(...)` and then calls
+   * loadDiscussionData(), so the whole load and render ran with no change
+   * detection. The data arrived and the view only caught up on the next unrelated
+   * event, which is why a new comment appeared as soon as the mouse moved.
+   *
+   * Running the source through inZone() means complete() fires inside the zone, so
+   * the promise resolution is scheduled there and the continuation inherits it.
+   */
   getForumIds(data: any){
-    return this.csDiscussionService?.getForumIds(data).toPromise()
+    const source = this.csDiscussionService?.getForumIds(data)
+    if (!source) { return Promise.resolve(undefined) }
+    return this.inZone(source)!.toPromise()
   }
   
   set userDetails(userDetails: any) {
